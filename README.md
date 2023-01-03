@@ -1,4 +1,4 @@
-# Global-Quantization
+# gqsgd
 
 * Install
 
@@ -7,17 +7,17 @@
     ```
 * Uninstall
     ```shell
-    pip uninstall gqsgd gqsgd_cuda
+    pip uninstall gqsgd
     ```
 * Check Installation
     ```shell
     python
     import torch
     import gqsgd
-    import gqsgd_cuda
+    import gqsgd
     ```
 * Usage
     ```python
     from gqsgd.ddphook import *
-    model.register_comm_hook(None, exponential_dithering_hook)# Register right after calling model.ddp()
+    model.register_comm_hook(None, exponential_dithering_hook)# [default_hook, standard_dithering_hook, exponential_dithering_hook]
     ```

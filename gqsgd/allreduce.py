@@ -31,7 +31,7 @@ def standard_dithering_allreduce(tensor):
                 send_req = dist.isend(recv_buff, right)
             accum[:] += send_buff[:]
         send_req.wait()
-    tensor[:] = accum[:]/size
+    tensor[:] = accum[:]
 
 """ Implementation of a ring-reduce with customized add """
 def exponential_dithering_allreduce(tensor):
@@ -48,16 +48,11 @@ def exponential_dithering_allreduce(tensor):
             # Send send_buff
             if rank == 0:
                 send_req = dist.isend(send_buff, right)
-                # print("Rank 0 send to rank 1: ", send_buff)
                 dist.recv(recv_buff, left)
             else:
                 dist.recv(recv_buff, left)
                 send_req = dist.isend(send_buff, right)
-                # print("Rank 1 send to rank 0: ", send_buff)
             tmp=recv_buff[:].clone()
-            # if rank == 1:
-            #     print("Rank 1 recv_buff:", recv_buff)
-            #     print("Rank 1 accum:", accum)
             gqsgd_cuda.exponential_dithering_reduce(accum[:], tmp)
         else:
             # Send recv_buff
@@ -69,7 +64,5 @@ def exponential_dithering_allreduce(tensor):
                 send_req = dist.isend(recv_buff, right)
             tmp=send_buff[:].clone()
             gqsgd_cuda.exponential_dithering_reduce(accum[:], tmp)
-            # print("Rank 0 accum:", accum)
-
         send_req.wait()
     tensor[:] = accum[:]
