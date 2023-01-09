@@ -68,7 +68,7 @@ def exponential_dithering_hook(
     world_size = group_to_use.size()
     maximum = bucket.buffer().abs().max()
     dist.all_reduce(tensor = maximum, op=dist.ReduceOp.MAX, group = group_to_use, async_op=False)  # Allreduce Max of abs
-    maximum *= world_size
+    maximum *= log2(world_size)
     compressed_tensor = gqsgd_cuda.exponential_dithering_compress(bucket.buffer(), maximum)
     allreduce.exponential_dithering_allreduce(tensor = compressed_tensor)
     decompressed_tensor = gqsgd_cuda.exponential_dithering_decompress(compressed_tensor, maximum, world_size)
