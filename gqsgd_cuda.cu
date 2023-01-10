@@ -33,7 +33,7 @@ torch::Tensor standard_dithering_random_round_cuda(torch::Tensor input) {
 }
 
 // Exponential Dithering
-#define max_interval 128.0 //127+1 largest_interval + ⌈log(n)⌉
+#define max_interval 64.0 //63+1 largest_interval + ⌈log(n)⌉
 
 __global__ void exponential_dithering__compress_cuda_kernel(
     float *dev_gradient,
@@ -51,7 +51,7 @@ __global__ void exponential_dithering__compress_cuda_kernel(
     int exp;
     float prob = abs(frexpf(dev_gradient[i], &exp)) / 0.5 - 1.; // exp = [-127, 1]; prob = [0.5, 1) -> [0, 1)
     if (dev_rand[i] >= prob) exp = exp - 1.0;// Prob < 1 so only round to 2^exp or 2^exp-1
-    exp = max(exp, -127);
+    exp = max(exp, -63);
     exp = min(exp, 0); //exp = [-63,0]
     exp = -exp; //exp = [0,63]
     if (dev_gradient[i] < 0) exp += 128; // Negative Highest bit = 1
