@@ -6,9 +6,12 @@ import gqsgd_cuda
 from gqsgd import allreduce
 
 def run(rank, size):
-    input = torch.tensor([-8,-4,-2,-1,0,1,2,4,8],dtype=torch.float).cuda(rank)
     if rank ==0:
-        print("Original Value:")
+        input = torch.tensor([-8,-4,-2,-1,0,1,2,4,8],dtype=torch.float).cuda(rank)
+    else:
+        input = torch.tensor([8,4,2,1,0,-1,-2,-4,-8],dtype=torch.float).cuda(rank)
+    if rank ==0:
+        print("rank ", rank, " Original Value:")
         print(input)
         print("")
     global_norm = torch.tensor([8*size],dtype=torch.float).cuda(rank)
@@ -42,7 +45,7 @@ def init_process(rank, size, fn, backend='nccl'):
 
 
 if __name__ == "__main__":
-    size = 4
+    size = 2
     processes = []
     mp.set_start_method("spawn")
     for rank in range(size):

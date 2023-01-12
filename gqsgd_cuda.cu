@@ -33,7 +33,7 @@ torch::Tensor standard_dithering_random_round_cuda(torch::Tensor input) {
 }
 
 // Exponential Dithering
-#define max_interval 64.0 //63+1 largest_interval + ⌈log(n)⌉
+#define max_interval 127.0 + 2 //127 + ⌈log(n)⌉
 
 __global__ void exponential_dithering__compress_cuda_kernel(
     float *dev_gradient,
@@ -51,11 +51,11 @@ __global__ void exponential_dithering__compress_cuda_kernel(
     int exp;
     float prob = abs(frexpf(dev_gradient[i], &exp)) / 0.5 - 1.; // exp = [-127, 1]; prob = [0.5, 1) -> [0, 1)
     if (dev_rand[i] >= prob) exp = exp - 1.0;// Prob < 1 so only round to 2^exp or 2^exp-1
-    exp = max(exp, -63);
-    exp = min(exp, 0); //exp = [-63,0]
-    exp = -exp; //exp = [0,63]
+    exp = max(exp, -127);
+    exp = min(exp, 0); //exp = [-127,0]
+    exp = -exp; //exp = [0,127]
     if (dev_gradient[i] < 0) exp += 128; // Negative Highest bit = 1
-    if (dev_gradient[i] == 0) exp = 63;  // Set exp of 0 to -63
+    if (dev_gradient[i] == 0) exp = 127;  // Set exp of 0 to -127
     dev_compressed[i] = static_cast<uint8_t>(exp);
   }
 }
@@ -72,7 +72,7 @@ __global__ void exponential_dithering__decompress_cuda_kernel(
     // Decode
     int exp = dev_compressed[i];
     if(dev_compressed[i]>=128) exp -= 128;
-    if(exp>=63) {
+    if(exp==127) {
       dev_gradient[i] = 0;
       return;
     }
@@ -91,11 +91,11 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
   unsigned int tid = threadIdx.x + blockIdx.x * blockDim.x;
   unsigned int stride = gridDim.x * blockDim.x;
   for (unsigned int i = tid; i < dev_num_elem; i += stride) {
-    if(dev_compressed_a[i] == 63){
+    if(dev_compressed_a[i] == 127){
       dev_compressed_a[i] = dev_compressed_b[i];
       continue;
     }
-    if(dev_compressed_b[i] == 63){
+    if(dev_compressed_b[i] == 127){
       dev_compressed_b[i] = dev_compressed_a[i];
       continue;
     }
@@ -120,7 +120,7 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
     exp_a = - exp_a;
     exp_b = - exp_b;
     // Reduce
-    int k = floor(log( 
+    int k = floor(log2( 
             pow(2,-max_interval) +
             max(0.0 , dev_rand[i]-pow(2,-max_interval))
         ));
@@ -131,9 +131,10 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
     int nonz = 1 - (exp_a == exp_b && sign_a != sign_b);
     int geq = (exp_a >= exp_b);
     int le = 1 - geq;
-    int minz = (min_exp < 0);
+    // int minz = (min_exp < 0);
+    int minz = 1;
     int reduce_sign = sign_a * geq + sign_b * le;
-    int reduce_exp = nonz * (max_exp + minz * sign_ab * static_cast<int>(k<=diff));
+    int reduce_exp = (1-nonz)*(-127) + nonz * (max_exp + minz * sign_ab * static_cast<int>(k<=diff));
     //Encode
     dev_compressed_a[i] = -reduce_exp;
     if(reduce_sign == -1) dev_compressed_a[i] += 128;

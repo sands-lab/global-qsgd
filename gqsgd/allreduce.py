@@ -82,7 +82,7 @@ def isReceiver(rank, layer, interval):
         first_sender += 2 ** i
     return rank >= first_sender and (rank-first_sender) % (2*interval) == interval
 
-def tree_exponential_dithering_allreduce(tensor):
+def tree_allreduce(tensor, exponential):
     rank = dist.get_rank()
     size = dist.get_world_size()
     send_buff = tensor.clone()
@@ -97,7 +97,10 @@ def tree_exponential_dithering_allreduce(tensor):
             dist.isend(send_buff, rank + interval, tag = i)
         elif isReceiver(rank, i, interval):
             dist.recv(recv_buff, rank - interval, tag = i)
-            gqsgd_cuda.exponential_dithering_reduce(send_buff[:], recv_buff[:])
+            if exponential == True:
+                gqsgd_cuda.exponential_dithering_reduce(send_buff[:], recv_buff[:])
+            else:
+                send_buff[:] += recv_buff[:]
     # Broadcast
     dist.broadcast(send_buff, size-1)
     tensor[:] = send_buff[:]
