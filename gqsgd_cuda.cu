@@ -55,7 +55,7 @@ __global__ void exponential_dithering__compress_cuda_kernel(
     exp = min(exp, 0); //exp = [-63,0]
     exp = -exp; //exp = [0,63]
     if (dev_gradient[i] < 0) exp += 128; // Negative Highest bit = 1
-    if (dev_gradient[i] == 0) exp = 127;  // Set exp of 0 to -63
+    if (dev_gradient[i] == 0) exp = 63;  // Set exp of 0 to -63
     dev_compressed[i] = static_cast<uint8_t>(exp);
   }
 }
@@ -72,8 +72,11 @@ __global__ void exponential_dithering__decompress_cuda_kernel(
     // Decode
     int exp = dev_compressed[i];
     if(dev_compressed[i]>=128) exp -= 128;
+    if(exp>=63) {
+      dev_gradient[i] = 0;
+      return;
+    }
     dev_gradient[i] = pow(2,-exp);
-    if(exp>=127) dev_gradient[i] = 0;
     if(dev_compressed[i]>=128) dev_gradient[i] = -dev_gradient[i];
     // DeNormalize
     dev_gradient[i] = dev_gradient[i] * (*dev_global_norm)/world_size;
@@ -88,6 +91,14 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
   unsigned int tid = threadIdx.x + blockIdx.x * blockDim.x;
   unsigned int stride = gridDim.x * blockDim.x;
   for (unsigned int i = tid; i < dev_num_elem; i += stride) {
+    if(dev_compressed_a[i] == 63){
+      dev_compressed_a[i] = dev_compressed_b[i];
+      continue;
+    }
+    if(dev_compressed_b[i] == 63){
+      dev_compressed_b[i] = dev_compressed_a[i];
+      continue;
+    }
     // Decode
     int sign_a, sign_b, exp_a, exp_b;
     {

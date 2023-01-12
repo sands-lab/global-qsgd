@@ -11,7 +11,7 @@ def run(rank, size):
         print("Original Value:")
         print(input)
         print("")
-    global_norm = torch.tensor([8*2*size],dtype=torch.float).cuda(rank)
+    global_norm = torch.tensor([8*size],dtype=torch.float).cuda(rank)
     if rank ==0:
         print("Normalized Value:")
         print(input/(global_norm))
@@ -21,7 +21,7 @@ def run(rank, size):
         print("Compressed Value:")
         print(compressed)
         print("")
-    allreduce.exponential_dithering_allreduce(compressed)
+    allreduce.tree_exponential_dithering_allreduce(compressed)
     if rank ==0:
         print("Reduced Compressed Value:")
         print(compressed)
@@ -42,7 +42,7 @@ def init_process(rank, size, fn, backend='nccl'):
 
 
 if __name__ == "__main__":
-    size = 3
+    size = 4
     processes = []
     mp.set_start_method("spawn")
     for rank in range(size):
