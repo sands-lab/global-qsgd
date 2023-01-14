@@ -11,10 +11,12 @@ def run(rank, size):
     for i in range(repeat):
         if rank ==0:
             # input = torch.tensor([-8,-4,-2,-1,0,1,2,4,8],dtype=torch.float).cuda(rank)
-            input = torch.tensor([0.5]).cuda(rank)
+            input = torch.tensor([0.008]).cuda(rank)
+            # input = torch.tensor([3],dtype=torch.uint8).cuda(rank)
         else:
             # input = torch.tensor([8,4,2,1,0,-1,-2,-4,-8],dtype=torch.float).cuda(rank)
-            input = torch.tensor([-0.3]).cuda(rank)
+            input = torch.tensor([0.010]).cuda(rank)
+            # input = torch.tensor([3],dtype=torch.uint8).cuda(rank)
         # if rank ==0:
         #     print("rank ", rank, " Original Value:")
         #     print(input)
@@ -25,6 +27,7 @@ def run(rank, size):
         #     print(input/(global_norm))
         #     print("")
         compressed = gqsgd_cuda.exponential_dithering_compress(input, global_norm)
+        # print("compressed value: ", compressed)
         # interval = 1/127 
         # compressed = input.div_(size*global_norm*interval) # Compress to [-127,127]
         # gqsgd_cuda.standard_dithering_random_round(compressed)
@@ -33,12 +36,13 @@ def run(rank, size):
         # print(compressed)
         # print("")
         allreduce.tree_allreduce(tensor = compressed, exponential = True)
+        print("reduced value: ", compressed)
         # if rank ==0:
         #     print("Reduced Compressed Value:")
         #     print(compressed)
         #     print("")
         decompressed = gqsgd_cuda.exponential_dithering_decompress(compressed, global_norm,size)
-        # decompressed = compressed.to(torch.float32).mul_(global_norm*interval)
+        # decompressed = compressed.to(torch.float32).mul_(global_norm*interval)*2
         accum += decompressed
         # if rank ==0:
         #     print("Decompressed Value:")
