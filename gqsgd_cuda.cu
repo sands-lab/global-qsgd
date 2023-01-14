@@ -120,20 +120,26 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
     exp_a = - exp_a;
     exp_b = - exp_b;
     // Reduce
-    int k = floor(log2( 
+    float k = log2( 
             pow(2,-max_interval) +
             max(0.0 , dev_rand[i]-pow(2,-max_interval))
-        ));
+        );
     int max_exp = max(exp_a, exp_b);
     int min_exp = min(exp_a, exp_b);
     int sign_ab = sign_a * sign_b;
-    int diff = min_exp - max_exp + sign_ab - 1;
+    int diff_sign = (sign_a != sign_b);
+    int diff = min_exp - max_exp + diff_sign;
     int nonz = 1 - (exp_a == exp_b && sign_a != sign_b);
     int geq = (exp_a >= exp_b);
     int le = 1 - geq;
     // int minz = (min_exp < 0);
     int minz = 1;
     int reduce_sign = sign_a * geq + sign_b * le;
+    // printf("exp_a is %d, exp_b is %d, sign_a is %d, sign_b is %d, sign_ab is %d, nonz is %d, minz is %d, reduce_sign is %d \n", exp_a, exp_b, sign_a, sign_b, sign_ab, nonz, minz, reduce_sign);
+    // printf("dev_rand[i] is %f, k is %f, diff is %d\n", dev_rand[i], k, diff);
+    // float diff_pow = pow(2, diff);
+    // int k_lt_diff = (dev_rand[i] <= diff_pow);
+    // int reduce_exp = (1-nonz)*(-127) + nonz * (max_exp + minz * sign_ab * k_lt_diff);
     int reduce_exp = (1-nonz)*(-127) + nonz * (max_exp + minz * sign_ab * static_cast<int>(k<=diff));
     //Encode
     dev_compressed_a[i] = -reduce_exp;
@@ -152,6 +158,7 @@ torch::Tensor exponential_dithering_compress_cuda(torch::Tensor input, torch::Te
     blocks = min( (numel + threads - 1)/threads, MAX_NUMBER_OF_BLOCK);
     assert(threads > 0); assert(blocks > 0);
     exponential_dithering__compress_cuda_kernel<<<blocks, threads>>>(input.data_ptr<float>(), output.data_ptr<uint8_t>(), rand.data_ptr<float>(), global_norm.data_ptr<float>(), numel);
+    cudaDeviceSynchronize();
     return output;
 }
 // dequantize uint8 gradient to float32 gradient
@@ -163,6 +170,7 @@ torch::Tensor exponential_dithering_decompress_cuda(torch::Tensor input, torch::
     blocks = min( (numel + threads - 1)/threads, MAX_NUMBER_OF_BLOCK);
     assert(threads > 0); assert(blocks > 0);
     exponential_dithering__decompress_cuda_kernel<<<blocks, threads>>>(input.data_ptr<uint8_t>(), output.data_ptr<float>(), global_norm.data_ptr<float>(), numel, world_size);
+    cudaDeviceSynchronize();
     return output;
 }
 
@@ -175,5 +183,6 @@ torch::Tensor exponential_dithering_reduce_cuda(torch::Tensor input_a, torch::Te
     blocks = min( (numel + threads - 1)/threads, MAX_NUMBER_OF_BLOCK);
     assert(threads > 0); assert(blocks > 0);
     exponential_dithering__reduce_cuda_kernel<<<blocks, threads>>>(input_a.data_ptr<uint8_t>(), input_b.data_ptr<uint8_t>(), rand.data_ptr<float>(), numel);
+    cudaDeviceSynchronize();
     return input_a;
 }
