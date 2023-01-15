@@ -73,19 +73,28 @@ __global__ void exponential_dithering__decompress_cuda_kernel(
   unsigned int stride = gridDim.x * blockDim.x;
   for (unsigned int i = tid; i < dev_num_elem; i += stride) {
     // Decode
+    // Decode
     int exp = dev_compressed[i];
-    if(exp>=128){
-      exp = exp - 128;
-    }
-    if(exp==0) {
-      dev_gradient[i] = 0.0;
-      return;
-    }
+    if(dev_compressed[i]>=128) exp -= 128;
     dev_gradient[i] = pow(2,-exp);
+    if(exp==0) dev_gradient[i] = 0;
     if(dev_compressed[i]>=128) dev_gradient[i] = -dev_gradient[i];
     // DeNormalize
     dev_gradient[i] = dev_gradient[i] * (*dev_global_norm)/world_size;
   }
+  //   int exp = dev_compressed[i];
+  //   if(exp>=128){
+  //     exp = exp - 128;
+  //   }
+  //   if(exp==0) {
+  //     dev_gradient[i] = 0.0;
+  //     return;
+  //   }
+  //   dev_gradient[i] = pow(2,-exp);
+  //   if(dev_compressed[i]>=128) dev_gradient[i] = -dev_gradient[i];
+  //   // DeNormalize
+  //   dev_gradient[i] = dev_gradient[i] * (*dev_global_norm)/world_size;
+  // }
 }
 
 __global__ void exponential_dithering__reduce_cuda_kernel(
