@@ -45,21 +45,20 @@ __global__ void exponential_dithering__compress_cuda_kernel(
   unsigned int stride = gridDim.x * blockDim.x;
   for (unsigned int i = tid; i < dev_num_elem; i += stride) {
      // Normalize -> [-1,1]
-    // printf("dev_gradient[i] is %f, dev_global_norm is %f", dev_gradient[i], *dev_global_norm);
     dev_gradient[i] = dev_gradient[i]/(*dev_global_norm);
     // Decode
-    if (dev_gradient[i] == 0) {
-      dev_compressed[i] = 0;
-    }else{
-      int exp;
-      float prob = abs(frexpf(dev_gradient[i], &exp)) / 0.5 - 1.; // exp = [-127, 0]; prob = [0.5, 1) -> [0, 1)
-      if (dev_rand[i] >= prob) exp = exp - 1.0;// Prob < 1 so only round to 2^exp or 2^exp-1
-      exp = max(exp, -127);
-      assert(exp <=-1 && exp >= -127); // exp = [-127, -1]
-      exp = -exp; // exp = [1, 127] for positive and [129, 255] for negative
-      if (dev_gradient[i] < 0) exp += 128; // Negative Highest bit = 1
-      dev_compressed[i] = static_cast<uint8_t>(exp);
-    }
+    int is_zero = (dev_gradient[i] != 0);
+    int exp;
+    float prob = abs(frexpf(dev_gradient[i], &exp)) / 0.5 - 1.; // exp = [-127, 0]; prob = [0.5, 1) -> [0, 1)
+    int round_down = (dev_rand[i] >= prob);
+    exp = exp - round_down;
+    exp = max(exp, -127);
+    assert(exp <=-1 && exp >= -127); // exp = [-127, -1]
+    exp = -exp; // exp = [1, 127] for positive and [129, 255] for negative
+    int is_negative = (dev_gradient[i] < 0);
+    exp += is_negative * 128; // Negative Highest bit = 1
+    dev_compressed[i] = static_cast<uint8_t>(exp);
+    dev_compressed[i] = dev_compressed[i] * is_zero; // Set to 0 if gradient is 0
   }
 }
 
@@ -75,26 +74,15 @@ __global__ void exponential_dithering__decompress_cuda_kernel(
     // Decode
     // Decode
     int exp = dev_compressed[i];
-    if(dev_compressed[i]>=128) exp -= 128;
+    int is_negative = (exp >= 128);
+    exp = exp - is_negative * 128;
     dev_gradient[i] = pow(2,-exp);
-    if(exp==0) dev_gradient[i] = 0;
-    if(dev_compressed[i]>=128) dev_gradient[i] = -dev_gradient[i];
+    dev_gradient[i] = dev_gradient[i] * (1 - is_negative * 2);
     // DeNormalize
     dev_gradient[i] = dev_gradient[i] * (*dev_global_norm)/world_size;
+    int is_zero = (exp == 0);
+    dev_gradient[i] = dev_gradient[i] * (1 - is_zero);
   }
-  //   int exp = dev_compressed[i];
-  //   if(exp>=128){
-  //     exp = exp - 128;
-  //   }
-  //   if(exp==0) {
-  //     dev_gradient[i] = 0.0;
-  //     return;
-  //   }
-  //   dev_gradient[i] = pow(2,-exp);
-  //   if(dev_compressed[i]>=128) dev_gradient[i] = -dev_gradient[i];
-  //   // DeNormalize
-  //   dev_gradient[i] = dev_gradient[i] * (*dev_global_norm)/world_size;
-  // }
 }
 
 __global__ void exponential_dithering__reduce_cuda_kernel(
@@ -107,22 +95,12 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
   for (unsigned int i = tid; i < dev_num_elem; i += stride) {
     // Decode
     int sign_1, sign_2, e_1, e_2;
-    {
-      if (dev_compressed_a[i] >= 128 ){
-        sign_1 = -1;
-        e_1 = dev_compressed_a[i] - 128;
-      } else{
-        sign_1 = 1;
-        e_1 = dev_compressed_a[i];
-      }
-      if (dev_compressed_b[i] >= 128 ){
-        sign_2 = -1;
-        e_2 = dev_compressed_b[i] - 128;
-      } else{
-        sign_2 = 1;
-        e_2 = dev_compressed_b[i];
-      }
-    }
+    int is_negative_1 = (dev_compressed_a[i] >= 128);
+    int is_negative_2 = (dev_compressed_b[i] >= 128);
+    e_1 = dev_compressed_a[i] - is_negative_1 * 128;
+    e_2 = dev_compressed_b[i] - is_negative_2 * 128;
+    sign_1 = 1 - is_negative_1 * 2;
+    sign_2 = 1 - is_negative_2 * 2;
     // Reduce
     int k = -floor(log2( 
         pow(2,-max_interval) +
@@ -142,7 +120,7 @@ __global__ void exponential_dithering__reduce_cuda_kernel(
     // printf("e_1 is %d, e_2 is %d, sign_1 is %d, sign_2 is %d, sign_12 is %d, sign_res is %d, e_res is %d, k is %f, diff is %d, leq is %d, non_zero is %d\n", e_1, e_2, sign_1, sign_2, sign_12, sign_res, e_res, k, diff, leq, non_zero);
     //Encode
     dev_compressed_a[i] = e_res;
-    if(sign_res == -1) dev_compressed_a[i] += 128;
+    dev_compressed_a[i] += 128 * (sign_res == -1);
     dev_compressed_b[i] = dev_compressed_a[i];
   }
 }
