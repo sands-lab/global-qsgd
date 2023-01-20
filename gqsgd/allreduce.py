@@ -58,7 +58,7 @@ def isReceiver(rank, layer, interval):
         first_sender += 2 ** i
     return rank >= first_sender and (rank-first_sender) % (2*interval) == interval
 
-def tree_allreduce(tensor, exponential):
+def tree_allreduce(tensor, exponential = False):
     rank = dist.get_rank()
     size = dist.get_world_size()
     send_buff = tensor.clone()
@@ -78,5 +78,11 @@ def tree_allreduce(tensor, exponential):
             else:
                 send_buff[:] += recv_buff[:]
     # Broadcast
-    dist.broadcast(send_buff, size-1)
+    # dist.broadcast(send_buff, size-1)
+    for i in range(layers-1, -1, -1):
+        interval = 2 ** (i)
+        if isSender(rank, i, interval):
+            dist.recv(send_buff, rank + interval, tag = i+layers)
+        elif isReceiver(rank, i, interval):
+            dist.isend(send_buff, rank - interval, tag = i+layers)
     tensor[:] = send_buff[:]
