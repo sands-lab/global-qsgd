@@ -23,8 +23,7 @@ def default_hook(
     group_to_use = process_group if process_group is not None else dist.group.WORLD
     world_size = group_to_use.size()
     buffer = bucket.buffer().div_(world_size)
-    allreduce.tree_allreduce(tensor = compressed_tensor, exponential = False)
-    # allreduce.standard_dithering_allreduce(tensor = buffer)
+    allreduce.standard_dithering_allreduce(tensor = buffer)
     fut = torch.futures.Future()
     fut.set_result(buffer)
     return fut
