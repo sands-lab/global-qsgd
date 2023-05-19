@@ -1,4 +1,15 @@
 # ImageNet training in PyTorch
+This repo is modified from https://github.com/pytorch/examples/tree/main/imagenet
+To launch the code:
+```shell
+python main.py -a wide_resnet101_2 --epochs=90 --batch-size 64 --dist-url 'tcp://127.0.0.1:12701' --dist-backend 'nccl' --multiprocessing-distributed --world-size 1 --rank 0 --seed=100 --hook default <path to imagenet>
+```
+`--hook` can choose from [default, standard_dithering, exponential_dithering, qsgd, powerSGD, lgreco].
+
+More details can be found below.
+
+---
+
 
 This implements training of popular model architectures, such as ResNet, AlexNet, and VGG on the ImageNet dataset.
 

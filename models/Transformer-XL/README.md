@@ -1,5 +1,15 @@
 # Transformer-XL For PyTorch
+This repo is modified from https://github.com/kimiyoung/transformer-xl
+To launch the code:
+```shell
+cd pytorch
+bash run_wt103_base.sh train 4 32 TF32/DP32_1 1 <hook> --config dgxa100_4gpu_tf32 --adjust_freq 50
+```
+`<hook>` can choose from [gqsgdDefault, gqsgdStandardDithering, gqsgdExponentialDithering, qsgd, powerSGD, lgreco].
 
+More details can be found below.
+
+---
 This repository provides a script and recipe to train the Transformer-XL model
 to achieve state-of-the-art accuracy, and is tested and maintained by NVIDIA.
 

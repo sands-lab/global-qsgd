@@ -21,7 +21,7 @@ def run(rank, size):
         print("Compressed Value:")
         print(compressed)
         print("")
-    allreduce.exponential_dithering_allreduce(compressed)
+    allreduce.tree_allreduce(compressed, exponential=True)
     if rank ==0:
         print("Reduced Compressed Value:")
         print(compressed)

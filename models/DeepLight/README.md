@@ -1,4 +1,15 @@
 # DeepLight
+This repo is modified from https://github.com/sands-lab/omnireduce-experiments/tree/master/models/DeepLight.
+To launch the code:
+```shell
+mpirun -np 4 python main_all.py -l2 6e-7 -n_epochs 10 -warm 2 -prune 1 -sparse 0.90 -prune_deep 1 -prune_fm 1 -prune_r 1 -use_fwlw 1 -emb_r 0.444 -emb_corr 1. -batch_size 512 -backend=nccl -random_seed=100 -hook=default
+```
+`--hook` can choose from [default, standard_dithering, exponential_dithering, qsgd,powerSGD, lgreco].
+
+More details can be found below.
+
+---
+
 DeepLight is a sparse DeepFwFM which is a click-through rate (CTR) prediction model. We modify [this repo](https://github.com/WayneDW/DeepLight_Deep-Lightweight-Feature-Interactions) script to support distributed data parallelism by using PyTorch DistributedDataParallel (DDP) package. The training dataset we use is [Criteo’s 1TB Click Prediction Dataset](https://docs.microsoft.com/en-us/archive/blogs/machinelearning/now-available-on-azure-ml-criteos-1tb-click-prediction-dataset). The folder dataset has a tiny dataset ((several batches)) for testing.
 
 ## Requirements
