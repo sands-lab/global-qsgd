@@ -86,3 +86,38 @@ def tree_allreduce(tensor, exponential = False):
         elif isReceiver(rank, i, interval):
             dist.isend(send_buff, rank - interval, tag = i+layers)
     tensor[:] = send_buff[:]
+
+def tree_allgather(tensor) -> torch.Tensor:
+    rank = dist.get_rank()
+    size = dist.get_world_size()
+    send_buff = tensor.clone().unsqueeze(0)
+    Allgather_tensor = [send_buff.clone() for i in range(size)]
+    Allgather_tensor = torch.cat(Allgather_tensor, 0)
+    layers = int(math.log2(size))
+    if(layers != math.log2(size)):
+        raise ValueError("The size of the world must be power of 2")
+    # Gather
+    for i in range(layers):
+        interval = 2 ** (i)
+        recv_buff = send_buff.clone()
+        if isSender(rank, i, interval):
+            dist.isend(send_buff, rank + interval, tag = i)
+        elif isReceiver(rank, i, interval):
+            dist.recv(recv_buff, rank - interval, tag = i)
+            send_buff = torch.cat((recv_buff,send_buff), 0)
+    # Broadcast
+    # dist.broadcast(send_buff, size-1)
+    # print("Rank:",rank, "", send_buff.size())
+    for i in range(layers-1, -1, -1):
+        interval = 2 ** (i)
+        if isSender(rank, i, interval):
+            dist.recv(Allgather_tensor, rank + interval, tag = i+layers)
+            send_buff = Allgather_tensor
+        elif isReceiver(rank, i, interval):
+            Allgather_tensor = send_buff
+            dist.isend(send_buff, rank - interval, tag = i+layers)
+    # print("Rank:",rank, "", Allgather_tensor.size())
+    # print(tensor_list)
+    return Allgather_tensor
+    
+

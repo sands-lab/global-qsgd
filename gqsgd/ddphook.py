@@ -23,7 +23,7 @@ def default_hook(
     group_to_use = process_group if process_group is not None else dist.group.WORLD
     world_size = group_to_use.size()
     buffer = bucket.buffer().div_(world_size)
-    allreduce.standard_dithering_allreduce(tensor = buffer)
+    allreduce.tree_allreduce(tensor = buffer, exponential = False)
     fut = torch.futures.Future()
     fut.set_result(buffer)
     return fut
@@ -72,6 +72,36 @@ def exponential_dithering_hook(
     compressed_tensor = gqsgd_cuda.exponential_dithering_compress(bucket.buffer(), maximum)
     allreduce.tree_allreduce(tensor = compressed_tensor, exponential = True)
     decompressed_tensor = gqsgd_cuda.exponential_dithering_decompress(compressed_tensor, maximum, world_size)
+    fut = torch.futures.Future()
+    fut.set_result(decompressed_tensor)
+    return fut
+
+def qsgd_hook(
+    process_group: dist.ProcessGroup, bucket: dist.GradBucket
+) -> torch.futures.Future[torch.Tensor]:
+    """
+    This DDP communication hook implements qsgd without elis encoding.
+    It will quantize the gradient tensor to 8-bit signed integer: Normalize by local norm, multiply by 127 ->[-127,0,127], then round with probability.
+    The quantized tensor will be all_gathered then dequantized to the same data type as the input gradient tensor.
+
+    Example::
+        >>> ddp_model.register_comm_hook(process_group(None), standard_dithering_hook)
+    """
+    group_to_use = process_group if process_group is not None else dist.group.WORLD
+    world_size = group_to_use.size()
+    maximum = bucket.buffer().abs().max()
+    # Allgather maximum
+    maximums = allreduce.tree_allgather(maximum)
+    interval = 1/127 
+    compressed_tensor = bucket.buffer().div_(world_size*maximum*interval) # Compress to [-127,127]
+    gqsgd_cuda.standard_dithering_random_round(compressed_tensor)
+    compressed_tensor = compressed_tensor.to(torch.int8)
+    # Allgather
+    tensors = allreduce.tree_allgather(compressed_tensor)
+    # Decompress
+    decompressed_tensor = torch.zeros_like(bucket.buffer())
+    for i in range(world_size):
+        decompressed_tensor.add_(tensors[i].to(torch.float32).mul_(maximums[i]*interval))
     fut = torch.futures.Future()
     fut.set_result(decompressed_tensor)
     return fut
