@@ -272,6 +272,7 @@ def main_worker(gpu, ngpus_per_node, args):
             traindir,
             transforms.Compose([
                 transforms.RandomHorizontalFlip(),
+                transforms.Resize((224, 224)),
                 transforms.ToTensor(),
                 normalize,
             ]))
@@ -279,6 +280,7 @@ def main_worker(gpu, ngpus_per_node, args):
         val_dataset = datasets.ImageFolder(
             valdir,
             transforms.Compose([
+                transforms.Resize((224, 224)),
                 transforms.ToTensor(),
                 normalize,
             ]))
