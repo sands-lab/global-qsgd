@@ -1,4 +1,6 @@
 build/**
 dist/**
 gqsgd.egg-info/**
-gqsgd/__pycache__/**
+**/__pycache__/
+models/Transformer-XL/pytorch/TF32/
+models/Transformer-XL/pytorch/wikitext-103/
