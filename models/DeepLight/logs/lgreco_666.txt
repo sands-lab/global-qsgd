@@ -1,0 +1,172 @@
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='lgreco', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='lgreco', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='lgreco', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='lgreco', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+LGreco Hook
+LGreco Hook
+LGreco Hook
+LGreco Hook
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [1] loss: 0.051981 metric: 0.978703 sparse 0.00% time: 54.912005 s
+Validation [1] loss: 0.134442 metric: 0.714545 sparse 0.00% time: 54.928140 s
+**************************************************
+Training [1] loss: 0.051981 metric: 0.978703 sparse 0.00% time: 54.932973 s
+Training [1] loss: 0.051981 metric: 0.978703 sparse 0.00% time: 54.946730 s
+Validation [1] loss: 0.134442 metric: 0.714545 sparse 0.00% time: 54.949189 s
+**************************************************
+Training [1] loss: 0.051981 metric: 0.978703 sparse 0.00% time: 54.951528 s
+Validation [1] loss: 0.134442 metric: 0.714545 sparse 0.00% time: 54.963387 s
+**************************************************
+Validation [1] loss: 0.134442 metric: 0.714545 sparse 0.00% time: 54.968121 s
+**************************************************
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [2] loss: 0.029899 metric: 0.992333 sparse 0.00% time: 53.361313 s
+Training [2] loss: 0.029899 metric: 0.992333 sparse 0.00% time: 53.380603 s
+Validation [2] loss: 0.174400 metric: 0.696230 sparse 0.00% time: 53.377441 s
+**************************************************
+Validation [2] loss: 0.174400 metric: 0.696230 sparse 0.00% time: 53.396536 s
+**************************************************
+Training [2] loss: 0.029899 metric: 0.992333 sparse 0.00% time: 53.374705 s
+Training [2] loss: 0.029899 metric: 0.992333 sparse 0.00% time: 53.381465 s
+Validation [2] loss: 0.174400 metric: 0.696230 sparse 0.00% time: 53.391131 s
+**************************************************
+Validation [2] loss: 0.174400 metric: 0.696230 sparse 0.00% time: 53.397920 s
+**************************************************
+Model parameters 603176445, sparse rate 0.79%
+Model parameters 603176445, sparse rate 0.79%
+Model parameters 603176445, sparse rate 0.79%
+Model parameters 603176445, sparse rate 0.79%
+Training [3] loss: 0.020004 metric: 0.996127 sparse 0.79% time: 68.765454 s
+Training [3] loss: 0.020004 metric: 0.996127 sparse 0.79% time: 68.766478 s
+Validation [3] loss: 0.206755 metric: 0.697467 sparse 0.79% time: 68.780562 s
+**************************************************
+Validation [3] loss: 0.206755 metric: 0.697467 sparse 0.79% time: 68.781724 s
+**************************************************
+Training [3] loss: 0.020004 metric: 0.996127 sparse 0.79% time: 68.785872 s
+Training [3] loss: 0.020004 metric: 0.996127 sparse 0.79% time: 68.789439 s
+Validation [3] loss: 0.206755 metric: 0.697467 sparse 0.79% time: 68.801794 s
+**************************************************
+Validation [3] loss: 0.206755 metric: 0.697467 sparse 0.79% time: 68.805327 s
+**************************************************
+Model parameters 598388965, sparse rate 1.57%
+Model parameters 598388965, sparse rate 1.57%
+Model parameters 598388965, sparse rate 1.57%
+Model parameters 598388965, sparse rate 1.57%
+Training [4] loss: 0.016122 metric: 0.997581 sparse 1.57% time: 72.382550 s
+Training [4] loss: 0.016122 metric: 0.997581 sparse 1.57% time: 72.384391 s
+Validation [4] loss: 0.222475 metric: 0.693288 sparse 1.57% time: 72.398472 s
+**************************************************
+Validation [4] loss: 0.222475 metric: 0.693288 sparse 1.57% time: 72.400298 s
+**************************************************
+Training [4] loss: 0.016122 metric: 0.997581 sparse 1.57% time: 72.381839 s
+Training [4] loss: 0.016122 metric: 0.997581 sparse 1.57% time: 72.385056 s
+Validation [4] loss: 0.222475 metric: 0.693288 sparse 1.57% time: 72.397873 s
+**************************************************
+Validation [4] loss: 0.222475 metric: 0.693288 sparse 1.57% time: 72.401146 s
+**************************************************
+Model parameters 593674464, sparse rate 2.35%
+Model parameters 593674464, sparse rate 2.35%
+Model parameters 593674464, sparse rate 2.35%
+Model parameters 593674464, sparse rate 2.35%
+Training [5] loss: 0.015434 metric: 0.998174 sparse 2.35% time: 75.750937 s
+Training [5] loss: 0.015434 metric: 0.998174 sparse 2.35% time: 75.760880 s
+Validation [5] loss: 0.315774 metric: 0.687384 sparse 2.35% time: 75.767143 s
+**************************************************
+Validation [5] loss: 0.315774 metric: 0.687384 sparse 2.35% time: 75.777007 s
+**************************************************
+Training [5] loss: 0.015434 metric: 0.998174 sparse 2.35% time: 75.763517 s
+Training [5] loss: 0.015434 metric: 0.998174 sparse 2.35% time: 75.765393 s
+Validation [5] loss: 0.315774 metric: 0.687384 sparse 2.35% time: 75.779667 s
+**************************************************
+Validation [5] loss: 0.315774 metric: 0.687384 sparse 2.35% time: 75.781684 s
+**************************************************
+Model parameters 1412285, sparse rate 99.77%
+Model parameters 1412285, sparse rate 99.77%
+Model parameters 1412285, sparse rate 99.77%
+Model parameters 1412285, sparse rate 99.77%
+Training [6] loss: 0.009684 metric: 0.999059 sparse 99.77% time: 53.301204 s
+Training [6] loss: 0.009684 metric: 0.999059 sparse 99.77% time: 53.317230 s
+Validation [6] loss: 0.295659 metric: 0.681978 sparse 99.77% time: 53.316637 s
+**************************************************
+Validation [6] loss: 0.295659 metric: 0.681978 sparse 99.77% time: 53.332669 s
+**************************************************
+Training [6] loss: 0.009684 metric: 0.999059 sparse 99.77% time: 53.309901 s
+Training [6] loss: 0.009684 metric: 0.999059 sparse 99.77% time: 53.311215 s
+Validation [6] loss: 0.295659 metric: 0.681978 sparse 99.77% time: 53.326435 s
+**************************************************
+Validation [6] loss: 0.295659 metric: 0.681978 sparse 99.77% time: 53.327784 s
+**************************************************
+Model parameters 1130780, sparse rate 99.81%
+Model parameters 1130780, sparse rate 99.81%
+Model parameters 1130780, sparse rate 99.81%
+Model parameters 1130780, sparse rate 99.81%
+Training [7] loss: 0.007346 metric: 0.999311 sparse 99.81% time: 45.624177 s
+Training [7] loss: 0.007346 metric: 0.999311 sparse 99.81% time: 45.630414 s
+Validation [7] loss: 0.400197 metric: 0.686968 sparse 99.81% time: 45.639684 s
+**************************************************
+Validation [7] loss: 0.400197 metric: 0.686968 sparse 99.81% time: 45.646188 s
+**************************************************
+Training [7] loss: 0.007346 metric: 0.999311 sparse 99.81% time: 45.614374 s
+Training [7] loss: 0.007346 metric: 0.999311 sparse 99.81% time: 45.615983 s
+Validation [7] loss: 0.400197 metric: 0.686968 sparse 99.81% time: 45.630352 s
+**************************************************
+Validation [7] loss: 0.400197 metric: 0.686968 sparse 99.81% time: 45.631954 s
+**************************************************
+Model parameters 1123096, sparse rate 99.82%
+Model parameters 1123096, sparse rate 99.82%
+Model parameters 1123096, sparse rate 99.82%
+Model parameters 1123096, sparse rate 99.82%
+Training [8] loss: 0.008153 metric: 0.999365 sparse 99.82% time: 45.622075 s
+Training [8] loss: 0.008153 metric: 0.999365 sparse 99.82% time: 45.632858 s
+Validation [8] loss: 0.406677 metric: 0.679911 sparse 99.82% time: 45.637994 s
+**************************************************
+Validation [8] loss: 0.406677 metric: 0.679911 sparse 99.82% time: 45.648690 s
+**************************************************
+Training [8] loss: 0.008153 metric: 0.999365 sparse 99.82% time: 45.625971 s
+Training [8] loss: 0.008153 metric: 0.999365 sparse 99.82% time: 45.627605 s
+Validation [8] loss: 0.406677 metric: 0.679911 sparse 99.82% time: 45.641843 s
+**************************************************
+Validation [8] loss: 0.406677 metric: 0.679911 sparse 99.82% time: 45.643578 s
+**************************************************
+Model parameters 1115534, sparse rate 99.82%
+Model parameters 1115534, sparse rate 99.82%
+Model parameters 1115534, sparse rate 99.82%
+Model parameters 1115534, sparse rate 99.82%
+Training [9] loss: 0.003400 metric: 0.999883 sparse 99.82% time: 45.581236 s
+Training [9] loss: 0.003400 metric: 0.999883 sparse 99.82% time: 45.631232 s
+Validation [9] loss: 0.427207 metric: 0.674923 sparse 99.82% time: 45.596634 s
+**************************************************
+Validation [9] loss: 0.427207 metric: 0.674923 sparse 99.82% time: 45.646398 s
+**************************************************
+Training [9] loss: 0.003400 metric: 0.999883 sparse 99.82% time: 45.622384 s
+Training [9] loss: 0.003400 metric: 0.999883 sparse 99.82% time: 45.633159 s
+Validation [9] loss: 0.427207 metric: 0.674923 sparse 99.82% time: 45.638373 s
+**************************************************
+Validation [9] loss: 0.427207 metric: 0.674923 sparse 99.82% time: 45.649139 s
+**************************************************
+Model parameters 1108121, sparse rate 99.82%
+Model parameters 1108121, sparse rate 99.82%
+Model parameters 1108121, sparse rate 99.82%
+Model parameters 1108121, sparse rate 99.82%
+Training [10] loss: 0.003173 metric: 0.999866 sparse 99.82% time: 45.680038 s
+Training [10] loss: 0.003173 metric: 0.999866 sparse 99.82% time: 45.687113 s
+Validation [10] loss: 0.463387 metric: 0.678875 sparse 99.82% time: 45.695147 s
+**************************************************
+Validation [10] loss: 0.463387 metric: 0.678875 sparse 99.82% time: 45.702301 s
+**************************************************
+Training [10] loss: 0.003173 metric: 0.999866 sparse 99.82% time: 45.669632 s
+Training [10] loss: 0.003173 metric: 0.999866 sparse 99.82% time: 45.673249 s
+Validation [10] loss: 0.463387 metric: 0.678875 sparse 99.82% time: 45.685375 s
+**************************************************
+Validation [10] loss: 0.463387 metric: 0.678875 sparse 99.82% time: 45.689017 s
+**************************************************
+Number of pruned total parameters: 1108121
+Number of pruned total parameters: 1108121
+Number of pruned total parameters: 1108121
+Number of pruned total parameters: 1108121
