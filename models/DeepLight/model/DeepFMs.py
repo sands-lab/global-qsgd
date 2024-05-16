@@ -29,8 +29,8 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 import torch.backends.cudnn
+from gqsgd import lgreco_hook, powerSGD_hook
 from gqsgd.ddphook import *
-from hooks import lgreco_hook, powerSGD_hook
 #import wandb
 
 """
