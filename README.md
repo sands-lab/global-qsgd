@@ -5,34 +5,55 @@ Global-QSGD provides an easy-of-use python library to speedup deep learning trai
 
 Global-QSGD requires the installation of PyTorch and CUDA.
 
-The code is tested on ASUS ESC N4A-E11 server equipped with 4 NVIDIA A100 GPUs, which runs. Ubuntu 22.04 with CUDA 11.6, and we use PyTorch 1.13.0.
+The code is tested on ASUS ESC N4A-E11 server equipped with 4 NVIDIA A100 GPUs, which runs. Ubuntu 22.04 with CUDA 11.6, and PyTorch 1.13.0.
 
-We provides an `environment.yaml` file to quickly install the code.
+### Run with Docker (Recommended)
+The recommended way to config our project is to use Docker, where we have installed Global-QSGD and all the dependencies to reproduce our experiment.
+```shell
+docker pull jihaoxin/global-qsgd:latest
+docker run --ipc=host --net=host --gpus=all --ulimit memlock=-1:-1 -v <mount path> --name GlobalQSGD -it jihaoxin/global-qsgd:latest bash
+```
 
-We also give user guide on each model in `models` folder.
-### Installation
-* Install
+
+### Compile from scratch
+User can also compile the source code to a python package by yourself.
+In case to do so, we suggest you also to run inside the provided Docker container to avoid version imcompatibility.
+We have packed Global-QSGD as a python package which can be simply use with pip.
+* **Install.** 
     ```shell
+    cd Global-QSGD
     python setup.py install
     ```
-* Uninstall
+* **Uninstall** 
     ```shell
     pip uninstall gqsgd
     ```
-* Check Installation
+* **Check Installation**
     ```shell
     python
     import torch
     import gqsgd
+    from gqsgd.ddphook import *
+    from gqsgd import lgreco_hook, powerSGD_hook
     ```
-* Run a test
+* **Sanity Check**
     ```shell
     # cd test
     python testddp.py
     ```
 ### Usage
-Users can simply use Global-QSGD by registering the hook after wrap the model by DDP. Hook can choose from [default_hook, standard_dithering_hook, exponential_dithering_hook].
+Users can simply use Global-QSGD by registering the hook after wrap the model by DDP.
+
+Hook can choose from [default_hook, standard_dithering_hook, exponential_dithering_hook].
 ```python
+# wrap up the model with Python DDP 
 from gqsgd.ddphook import *
-model.register_comm_hook(None, exponential_dithering_hook)
+ddp_model.register_comm_hook(None, exponential_dithering_hook)
 ```
+
+### Examples
+We provide experiment with 3 models:
+* DeepLight
+* ResNet101
+* TransformerXL
+We give specific user guide on each model in the `models` folder.

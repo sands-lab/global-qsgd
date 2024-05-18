@@ -918,59 +918,6 @@ def main():
             return sum(p.numel() for p in model.parameters())
         count = count_parameters(para_model)
         print ("Model Parameters: ",count)
-        # print( para_model.parameters())
-        # if args.method == 'powerSGD':
-        #     print("PowerSGD", args.powersgd_rank)
-        #     state = powerSGD.PowerSGDState(torch.distributed.group.WORLD,
-        #                                    matrix_approximation_rank=args.powersgd_rank,
-        #                                    start_powerSGD_iter=args.warmup_step)
-        #     para_model.register_comm_hook(state, powerSGD.powerSGD_hook)
-        # if args.method == 'lgreco':
-        #     print("L-GreCo", args.powersgd_rank)
-        #     state = lgreco.PowerSGDState(torch.distributed.group.WORLD,
-        #                                 matrix_approximation_rank=args.powersgd_rank,
-        #                                 start_powerSGD_iter=args.warmup_step,
-        #                                 adjust_freq=args.adjust_freq,
-        #                                 adjust_gamma=0.25,
-        #                                 adjust_beta=4)
-        #     para_model.register_comm_hook(state, lgreco.powerSGD_hook)
-        # if args.method == 'accordion':
-        #     print("Accordion", args.powersgd_rank)
-        #     state = accordion.PowerSGDState(torch.distributed.group.WORLD,
-        #                                 matrix_approximation_rank=args.powersgd_rank,
-        #                                 start_powerSGD_iter=args.warmup_step,
-        #                                 adjust_freq=args.adjust_freq,
-        #                                 adjust_beta=1.5,
-        #                                 adjust_gamma=0.65)
-        #     para_model.register_comm_hook(state, accordion.powerSGD_hook)
-            
-        # if args.method == 'lgreco_accordion':
-        #     print("L-GreCo + Accordion", args.powersgd_rank)
-        #     state = lgreco_accordion.PowerSGDState(torch.distributed.group.WORLD,
-        #                                 matrix_approximation_rank=args.powersgd_rank,
-        #                                 start_powerSGD_iter=args.warmup_step,
-        #                                 adjust_freq=args.adjust_freq,
-        #                                 adjust_beta=4,
-        #                                 adjust_gamma=0.25,
-        #                                 accordion_min=args.powersgd_rank/2,
-        #                                 accordion_max=args.powersgd_rank*2)
-        #     para_model.register_comm_hook(state, lgreco_accordion.powerSGD_hook)
-
-        # if args.method == 'gqsgdDefault':
-        #     print("No quantization but customized allreduce", args.powersgd_rank)
-        #     para_model.register_comm_hook(None, gqsgd.ddphook.default_hook)
-
-        # if args.method == 'gqsgdStandardDithering':
-        #     print("Global Norm Standard Dithering", args.powersgd_rank)
-        #     para_model.register_comm_hook(None, gqsgd.ddphook.standard_dithering_hook)
-
-        # if args.method == 'gqsgdExponentialDithering':
-        #     print("Global Norm Exponential Dithering", args.powersgd_rank)
-        #     para_model.register_comm_hook(None, gqsgd.ddphook.exponential_dithering_hook)
-
-        # if args.method == 'qsgd':
-        #     print("QSGD Hook")
-        #     para_model.register_comm_hook(None, gqsgd.ddphook.qsgd_hook)
 
         #  Register DDP Hook
         hook = args.method
