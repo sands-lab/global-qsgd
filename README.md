@@ -22,7 +22,7 @@ We have packed Global-QSGD as a python package which can be simply use with pip.
 * **Install.** 
     ```shell
     cd Global-QSGD
-    python setup.py install
+    python3 setup.py install
     ```
 * **Uninstall** 
     ```shell
@@ -30,7 +30,7 @@ We have packed Global-QSGD as a python package which can be simply use with pip.
     ```
 * **Check Installation**
     ```shell
-    python
+    python3
     import torch
     import gqsgd
     from gqsgd.ddphook import *
@@ -39,7 +39,7 @@ We have packed Global-QSGD as a python package which can be simply use with pip.
 * **Sanity Check**
     ```shell
     # cd test
-    python testddp.py
+    python3 testddp.py
     ```
 ### Usage
 Users can simply use Global-QSGD by registering the hook after wrap the model by DDP.
