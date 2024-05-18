@@ -1,3 +1,5 @@
+export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+export OMPI_ALLOW_RUN_AS_ROOT=1
 for seed in 666
 do
     for method in "default" "qsgd" "standard_dithering" "exponential_dithering" "powersgd" "lgreco"
