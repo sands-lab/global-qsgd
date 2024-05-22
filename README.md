@@ -10,8 +10,8 @@ The code is tested on ASUS ESC N4A-E11 server equipped with 4 NVIDIA A100 GPUs, 
 ### Run with Docker (Recommended)
 The recommended way to config our project is to use Docker, where we have installed Global-QSGD and all the dependencies to reproduce our experiment.
 ```shell
-docker pull jihaoxin/global-qsgd:latest
-docker run --ipc=host --net=host --gpus=all --ulimit memlock=-1:-1 -v <mount path> --name GlobalQSGD -it jihaoxin/global-qsgd:latest bash
+docker pull messagebuffer/global-qsgd:latest
+docker run --ipc=host --net=host --gpus=all --ulimit memlock=-1:-1 -v <mount path> --name GlobalQSGD -it messagebuffer/global-qsgd:latest bash
 ```
 
 
