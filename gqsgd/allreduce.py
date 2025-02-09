@@ -3,6 +3,39 @@ import torch.distributed as dist
 import gqsgd_cuda
 import math
 
+""" Implmentation of Parameter Server Allreduce"""
+def ps_allreduce(tensor, exponential=False):
+    rank = dist.get_rank()
+    size = dist.get_world_size()
+    send_buff = tensor.clone()
+    recv_buffs = [tensor.clone() for _ in range(size)]  # Separate buffer for each worker
+    reqs = []
+
+    if rank == 0:  # Parameter Server
+        # Post all receives first (non-blocking)
+        for i in range(1, size):
+            reqs.append(dist.irecv(recv_buffs[i], src=i))
+        # Process results as they arrive
+        for i, req in enumerate(reqs, 1):  # start enumeration from 1
+            req.wait()  # Wait for any receive to complete
+            if exponential:
+                gqsgd_cuda.exponential_dithering_reduce(send_buff[:], recv_buffs[i][:])
+            else:
+                send_buff[:] += recv_buffs[i][:]
+
+        # Broadcast aggregated results back to all workers
+        for i in range(1, size):
+            dist.isend(send_buff, dst=i).wait()
+
+    else:  # Workers
+        # Send local tensor to parameter server
+        dist.isend(send_buff, dst=0).wait()
+        # Receive aggregated result from parameter server
+        dist.recv(send_buff, src=0)
+    
+    tensor[:] = send_buff[:]
+
+
 """ Implementation of a ring-reduce with customized add """
 def ring_allreduce(tensor, exponential):
     rank = dist.get_rank()
