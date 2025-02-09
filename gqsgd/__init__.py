@@ -1,1 +1,1 @@
-__all__=["ddphook","allreduce","lgreco_hook","powerSGD_hook"]
+__all__=["ddphook","allreduce","lgreco_hook","powerSGD_hook","THC_uniform_hook"]

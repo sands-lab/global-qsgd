@@ -948,6 +948,9 @@ def main():
                                            matrix_approximation_rank=args.powersgd_rank,
                                            start_powerSGD_iter=args.warmup_step)
             para_model.register_comm_hook(state, powerSGD_hook.powerSGD_hook)
+        elif hook =="THC_uniform":
+            print("THC Uniform Hook")
+            para_model.register_comm_hook(None, THC_uniform_hook)
         else:
                 print("No Hook")
 

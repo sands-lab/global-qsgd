@@ -53,6 +53,32 @@ def standard_dithering_hook(
     fut.set_result(decompressed_tensor)
     return fut
 
+def THC_uniform_hook(
+    process_group: dist.ProcessGroup, bucket: dist.GradBucket
+) -> torch.futures.Future[torch.Tensor]:
+    """
+    This DDP communication hook implements THC uniform quantization.
+    It will quantize the gradient tensor to 8-bit signed integer: Normalize by global norm, multiply by 127 ->[-127,0,127], then round with probability.
+    The quantized tensor will be allreduced then dequantized to the same data type as the input gradient tensor.
+
+    Example::
+        >>> ddp_model.register_comm_hook(process_group(None), THC_uniform_hook)
+    """
+    group_to_use = process_group if process_group is not None else dist.group.WORLD
+    world_size = group_to_use.size()
+    maximum = bucket.buffer().abs().max()
+    dist.all_reduce(tensor = maximum, op=dist.ReduceOp.MAX, group = group_to_use, async_op=False)  # Allreduce Max of abs
+    interval = 1/127 
+    compressed_tensor = bucket.buffer().div_(world_size*maximum*interval) # Compress to [-127,127]
+    gqsgd_cuda.standard_dithering_random_round(compressed_tensor)
+    compressed_tensor = compressed_tensor.to(torch.int8)
+    allreduce.ps_allreduce(tensor = compressed_tensor, exponential = False)
+    decompressed_tensor = compressed_tensor.to(torch.float32).mul_(maximum*interval)
+    fut = torch.futures.Future()
+    fut.set_result(decompressed_tensor)
+    return fut
+
+
 def exponential_dithering_hook(
     process_group: dist.ProcessGroup, bucket: dist.GradBucket
 ) -> torch.futures.Future[torch.Tensor]:

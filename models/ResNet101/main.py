@@ -197,6 +197,9 @@ def main_worker(gpu, ngpus_per_node, args):
                                            matrix_approximation_rank=4,
                                            start_powerSGD_iter=2)
                 model.register_comm_hook(state, powerSGD_hook.powerSGD_hook)
+            elif hook =="THC_uniform":
+                print("THC Uniform Hook")
+                model.register_comm_hook(None, THC_uniform_hook)
             else:
                 print("No Hook")
 
