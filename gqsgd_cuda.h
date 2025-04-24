@@ -24,23 +24,6 @@ do {                                                                           \
   }                                                                            \
 } while (0)
 
-// Forward declarations for 4-bit standard dithering
-torch::Tensor standard_dithering_4bit_compress_cuda(
-    torch::Tensor input,
-    torch::Tensor global_min,
-    torch::Tensor global_max);
-
-std::tuple<torch::Tensor, torch::Tensor> standard_dithering_4bit_reduce_cuda(
-    torch::Tensor a,
-    torch::Tensor b,
-    long long original_numel);
-
-torch::Tensor standard_dithering_4bit_decompress_cuda(
-    torch::Tensor input,
-    torch::Tensor global_min,
-    torch::Tensor global_max,
-    long long original_numel);
-
 __inline__ float *dev_prob_generator(){
     extern const int num_elem;
     float *dev_rand;

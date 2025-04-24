@@ -359,61 +359,46 @@ torch::Tensor standard_dithering_4bit_compress_cuda(
 std::tuple<torch::Tensor, torch::Tensor> standard_dithering_4bit_reduce_cuda(
     torch::Tensor a,
     torch::Tensor b,
-    long long original_numel) {
+    float original_numel) {
     
-    // Get device info
-    cudaSetDevice(a.device().index());
+    // Cast original_numel to long long for internal use
+    long long numel_ll = static_cast<long long>(original_numel);
     
-    // Calculate unpacked and packed sizes
-    long long packed_size = a.numel();
+    auto numel = a.numel();
+    auto options = torch::TensorOptions().dtype(torch::kUInt8).device(a.device());
+    auto overflow = torch::zeros({numel}, options);
     
-    // Unpack both tensors
-    auto unpacked_a = torch::empty(original_numel, torch::TensorOptions().device(a.device()).dtype(torch::kUInt8));
-    auto unpacked_b = torch::empty(original_numel, torch::TensorOptions().device(b.device()).dtype(torch::kUInt8));
+    // Allocate temporary storage for unpacked 4-bit values
+    auto a_unpacked = torch::empty(numel, options);
+    auto b_unpacked = torch::empty(numel, options);
     
     // Calculate grid and block dimensions
     int threads = 256;
-    int blocks = (original_numel + threads - 1) / threads;
+    int blocks = (numel + threads - 1) / threads;
     
-    // Unpack a and b
+    // Unpack both tensors
     unpack_4bit_kernel<<<blocks, threads>>>(
         a.data_ptr<uint8_t>(),
-        unpacked_a.data_ptr<uint8_t>(),
-        original_numel
+        a_unpacked.data_ptr<uint8_t>(),
+        numel
     );
     
     unpack_4bit_kernel<<<blocks, threads>>>(
         b.data_ptr<uint8_t>(),
-        unpacked_b.data_ptr<uint8_t>(),
-        original_numel
+        b_unpacked.data_ptr<uint8_t>(),
+        numel
     );
     
-    // Create tensor to track overflow
-    auto overflow = torch::zeros(original_numel, torch::TensorOptions().device(a.device()).dtype(torch::kUInt8));
-    
-    // Reduce the values
+    // Perform reduction
     reduce_4bit_kernel<<<blocks, threads>>>(
-        unpacked_a.data_ptr<uint8_t>(),
-        unpacked_b.data_ptr<uint8_t>(),
+        a_unpacked.data_ptr<uint8_t>(),
+        b_unpacked.data_ptr<uint8_t>(),
         overflow.data_ptr<uint8_t>(),
-        original_numel
+        numel
     );
     
-    // Repack the result
-    auto result = torch::empty(packed_size, torch::TensorOptions().device(a.device()).dtype(torch::kUInt8));
-    
-    // Calculate new grid and block dimensions for packing
-    threads = 256;
-    blocks = (original_numel + threads - 1) / threads;
-    
-    // Pack the reduced values
-    pack_4bit_kernel<<<blocks, threads>>>(
-        unpacked_a.data_ptr<uint8_t>(),
-        result.data_ptr<uint8_t>(),
-        original_numel
-    );
-    
-    return std::make_tuple(result, overflow);
+    // Return the reduced tensor (a_unpacked) and overflow flag
+    return std::make_tuple(a_unpacked, overflow);
 }
 
 // Main interface for 4-bit decompression
@@ -421,35 +406,39 @@ torch::Tensor standard_dithering_4bit_decompress_cuda(
     torch::Tensor input,
     torch::Tensor global_min,
     torch::Tensor global_max,
-    long long original_numel) {
+    float original_numel) {
     
-    // Get device info
-    cudaSetDevice(input.device().index());
+    // Cast original_numel to long long for internal use
+    long long numel_ll = static_cast<long long>(original_numel);
     
-    // Unpack the 4-bit values
-    auto unpacked = torch::empty(original_numel, torch::TensorOptions().device(input.device()).dtype(torch::kUInt8));
+    // Each byte contains 2 values
+    auto numel = input.numel() * 2;
+    
+    // Create output tensor with size of original tensor
+    auto options = torch::TensorOptions().dtype(torch::kFloat32).device(input.device());
+    auto output = torch::zeros({numel_ll}, options);
+    
+    // Allocate temporary storage for unpacked 4-bit values
+    auto unpacked = torch::empty(numel, torch::TensorOptions().device(input.device()).dtype(torch::kUInt8));
     
     // Calculate grid and block dimensions
     int threads = 256;
-    int blocks = (original_numel + threads - 1) / threads;
+    int blocks = (numel + threads - 1) / threads;
     
-    // Unpack values
+    // Unpack the input
     unpack_4bit_kernel<<<blocks, threads>>>(
         input.data_ptr<uint8_t>(),
         unpacked.data_ptr<uint8_t>(),
-        original_numel
+        numel
     );
     
-    // Allocate output for decompressed values
-    auto output = torch::empty(original_numel, torch::TensorOptions().device(input.device()).dtype(torch::kFloat32));
-    
-    // Decompress values
+    // Decompress to original range
     standard_dithering_4bit_decompress_kernel<<<blocks, threads>>>(
         unpacked.data_ptr<uint8_t>(),
         output.data_ptr<float>(),
         global_min.data_ptr<float>(),
         global_max.data_ptr<float>(),
-        original_numel
+        numel_ll
     );
     
     return output;

@@ -88,8 +88,8 @@ def standard_dithering_4bit_compress(input):
     global_min = global_min.to(input.device)
     global_max = global_max.to(input.device)
     
-    # Store original size for later decompression
-    original_size = input.numel()
+    # Store original size as float for later decompression
+    original_size = float(input.numel())
     
     # Compress the tensor
     compressed = gqsgd_cuda.standard_dithering_4bit_compress(input, global_min, global_max)

@@ -27,13 +27,13 @@ torch::Tensor standard_dithering_4bit_compress_cuda(
 std::tuple<torch::Tensor, torch::Tensor> standard_dithering_4bit_reduce_cuda(
     torch::Tensor a,
     torch::Tensor b,
-    long long original_numel);
+    float original_numel);
 
 torch::Tensor standard_dithering_4bit_decompress_cuda(
     torch::Tensor input,
     torch::Tensor global_min,
     torch::Tensor global_max,
-    long long original_numel);
+    float original_numel);
 
 // C++ interface for exponential dithering
 torch::Tensor standard_dithering_random_round(torch::Tensor input) {
@@ -46,20 +46,23 @@ torch::Tensor exponential_dithering_decompress(torch::Tensor input, torch::Tenso
   return exponential_dithering_decompress_cuda(input, global_norm,world_size);
 }
 torch::Tensor exponential_dithering_reduce(torch::Tensor input_a, torch::Tensor input_b) {
-  return exponential_dithering_reduce_cuda(input_a, input_b);;
+  return exponential_dithering_reduce_cuda(input_a, input_b);
 }
 
 // C++ interface for 4-bit standard dithering
 torch::Tensor standard_dithering_4bit_compress(torch::Tensor input, torch::Tensor global_min, torch::Tensor global_max) {
   return standard_dithering_4bit_compress_cuda(input, global_min, global_max);
 }
-std::tuple<torch::Tensor, torch::Tensor> standard_dithering_4bit_reduce(torch::Tensor a, torch::Tensor b, long long original_numel) {
+
+std::tuple<torch::Tensor, torch::Tensor> standard_dithering_4bit_reduce(
+    torch::Tensor a, torch::Tensor b, float original_numel) {
   return standard_dithering_4bit_reduce_cuda(a, b, original_numel);
 }
-torch::Tensor standard_dithering_4bit_decompress(torch::Tensor input, torch::Tensor global_min, torch::Tensor global_max, long long original_numel) {
+
+torch::Tensor standard_dithering_4bit_decompress(
+    torch::Tensor input, torch::Tensor global_min, torch::Tensor global_max, float original_numel) {
   return standard_dithering_4bit_decompress_cuda(input, global_min, global_max, original_numel);
 }
-
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def("standard_dithering_random_round", &standard_dithering_random_round, "standard dithering random round (CUDA)");
