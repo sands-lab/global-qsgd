@@ -2,8 +2,7 @@ from . import ddphook, allreduce, lgreco_hook, powerSGD_hook
 
 __all__=["ddphook","allreduce","lgreco_hook","powerSGD_hook",
          "exponential_dithering_compress", "exponential_dithering_decompress", 
-         "exponential_dithering_reduce", "standard_dithering_random_round", "get_world_size",
-         "standard_dithering_4bit_compress", "standard_dithering_4bit_reduce", "standard_dithering_4bit_decompress"]
+         "exponential_dithering_reduce", "standard_dithering_random_round", "get_world_size"]
 
 import torch
 import torch.distributed as dist
@@ -70,72 +69,6 @@ def standard_dithering_random_round(input):
     """
     return gqsgd_cuda.standard_dithering_random_round(input)
 
-def standard_dithering_4bit_compress(input):
-    """
-    Compress the input tensor using 4-bit standard dithering.
-    
-    Args:
-        input: The input tensor to compress.
-    
-    Returns:
-        The compressed tensor.
-    """
-    # Find global min and max for the tensor
-    global_min = input.min().view(1)
-    global_max = input.max().view(1)
-    
-    # Move to same device as input
-    global_min = global_min.to(input.device)
-    global_max = global_max.to(input.device)
-    
-    # Store original size as float for later decompression
-    original_size = float(input.numel())
-    
-    # Compress the tensor
-    compressed = gqsgd_cuda.standard_dithering_4bit_compress(input, global_min, global_max)
-    
-    return {
-        'data': compressed,
-        'global_min': global_min,
-        'global_max': global_max,
-        'original_size': original_size
-    }
-
-def standard_dithering_4bit_reduce(a, b):
-    """
-    Reduce two compressed 4-bit tensors.
-    
-    Args:
-        a: First compressed tensor dictionary from standard_dithering_4bit_compress.
-        b: Second compressed tensor dictionary from standard_dithering_4bit_compress.
-    
-    Returns:
-        The reduced tensor dictionary.
-    """
-    # Combine global min and max
-    combined_min = torch.min(a['global_min'], b['global_min'])
-    combined_max = torch.max(a['global_max'], b['global_max'])
-    
-    # Ensure original sizes match
-    assert a['original_size'] == b['original_size'], "Tensor sizes must match for reduction"
-    
-    # Perform the reduction
-    reduced, overflow = gqsgd_cuda.standard_dithering_4bit_reduce(
-        a['data'], b['data'], a['original_size']
-    )
-    
-    # Check if we had significant overflow that might affect accuracy
-    has_overflow = overflow.sum().item() > 0
-    
-    return {
-        'data': reduced,
-        'global_min': combined_min,
-        'global_max': combined_max,
-        'original_size': a['original_size'],
-        'had_overflow': has_overflow
-    }
-
-def standard_dithering_4bit_decompress(compressed):
     """
     Decompress a tensor that was compressed using 4-bit standard dithering.
     
