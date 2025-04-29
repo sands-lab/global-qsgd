@@ -154,3 +154,47 @@ def tree_allgather(tensor) -> torch.Tensor:
     return Allgather_tensor
     
 
+def tree_allreduce_4bits(tensor, exponential = False):
+    rank = dist.get_rank()
+    size = dist.get_world_size()
+    send_buff = tensor.clone()
+    recv_buff = tensor.clone()
+    layers = int(math.log2(size))
+    if(layers != math.log2(size)):
+        raise ValueError("The size of the world must be power of 2")
+    # Reduce
+    for i in range(layers):
+        interval = 2 ** (i)
+        if isSender(rank, i, interval):
+            dist.isend(send_buff, rank + interval, tag = i)
+        elif isReceiver(rank, i, interval):
+            dist.recv(recv_buff, rank - interval, tag = i)
+            if exponential == True:
+                gqsgd_cuda.exponential_dithering_reduce(send_buff[:], recv_buff[:])
+            else:
+                # Add the packed 4-bit values
+                send_buff[:] += recv_buff[:]
+                # Divide by 2 for both the high 4 bits and low 4 bits with random rounding
+                # High 4 bits: extract, divide with random rounding
+                high_bits = (send_buff[:] >> 4)
+                high_remainder = high_bits % 2
+                high_rand = torch.rand_like(high_bits.float()) < 0.5 * high_remainder.float()
+                high_bits = high_bits // 2 + high_rand.to(high_bits.dtype)
+
+                # Low 4 bits: extract, divide with random rounding
+                low_bits = (send_buff[:] & 0x0F)
+                low_remainder = low_bits % 2
+                low_rand = torch.rand_like(low_bits.float()) < 0.5 * low_remainder.float()
+                low_bits = low_bits // 2 + low_rand.to(low_bits.dtype)
+                
+                # Combine the results
+                send_buff[:] = (high_bits << 4) | low_bits
+    # Broadcast
+    # dist.broadcast(send_buff, size-1)
+    for i in range(layers-1, -1, -1):
+        interval = 2 ** (i)
+        if isSender(rank, i, interval):
+            dist.recv(send_buff, rank + interval, tag = i+layers)
+        elif isReceiver(rank, i, interval):
+            dist.isend(send_buff, rank - interval, tag = i+layers)
+    tensor[:] = send_buff[:]

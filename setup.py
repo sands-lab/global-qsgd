@@ -5,7 +5,7 @@ setup(
     name='gqsgd',
     ext_modules=[
         CUDAExtension('gqsgd_cuda', [
-            'gqsgd_cuda.cpp',
+            'gqsgd_cuda_wrapper.cpp',
             'gqsgd_cuda.cu',
         ]),
     ],

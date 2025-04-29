@@ -1,12 +1,14 @@
+import gqsgd_cuda
+import torch.distributed as dist
 from . import ddphook, allreduce, lgreco_hook, powerSGD_hook
+
+
 
 __all__=["ddphook","allreduce","lgreco_hook","powerSGD_hook",
          "exponential_dithering_compress", "exponential_dithering_decompress", 
          "exponential_dithering_reduce", "standard_dithering_random_round", "get_world_size"]
 
-import torch
-import torch.distributed as dist
-import gqsgd_cuda
+
 
 def get_world_size():
     """Get the world size from PyTorch distributed if initialized, otherwise return 1."""
@@ -68,19 +70,3 @@ def standard_dithering_random_round(input):
         The rounded tensor.
     """
     return gqsgd_cuda.standard_dithering_random_round(input)
-
-    """
-    Decompress a tensor that was compressed using 4-bit standard dithering.
-    
-    Args:
-        compressed: Dictionary containing compressed data and metadata.
-    
-    Returns:
-        The decompressed tensor.
-    """
-    return gqsgd_cuda.standard_dithering_4bit_decompress(
-        compressed['data'],
-        compressed['global_min'],
-        compressed['global_max'],
-        compressed['original_size']
-    )

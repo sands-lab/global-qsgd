@@ -8,7 +8,6 @@
 #include <cassert>
 #include <algorithm>
 #include <bitset>
-#include <tuple>
 
 #define CUDA_CHECK(condition)                                                  \
 do {                                                                           \

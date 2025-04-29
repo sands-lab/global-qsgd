@@ -7,7 +7,7 @@ const long long MAX_THREAD_PER_BLOCK = 1024;
 const long long MAX_NUMBER_OF_BLOCK = 65535;
 int threads;
 int blocks;
-// Standard Dithering Random Rounding
+// Standdard Dithering Random Rounding
 __global__ void standard_dithering_random_round_cuda_kernel(
   float* __restrict__ input,
   const float* __restrict__ rand,
