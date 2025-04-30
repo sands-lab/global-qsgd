@@ -1,0 +1,14 @@
+NCCL_P2P_DISABLE: 1
+[W socket.cpp:426] [c10d] The server socket has failed to bind to [::]:44444 (errno: 98 - Address already in use).
+[W socket.cpp:426] [c10d] The server socket has failed to bind to 0.0.0.0:44444 (errno: 98 - Address already in use).
+[E socket.cpp:462] [c10d] The server socket has failed to listen on any local network address.
+Traceback (most recent call last):
+  File "main_all.py", line 58, in <module>
+    torch.distributed.init_process_group(backend=pars.backend, init_method=pars.init, world_size=world_size, rank=rank)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/distributed_c10d.py", line 754, in init_process_group
+    store, rank, world_size = next(rendezvous_iterator)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/rendezvous.py", line 201, in _tcp_rendezvous_handler
+    store = _create_c10d_store(result.hostname, result.port, rank, world_size, timeout)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/rendezvous.py", line 177, in _create_c10d_store
+    return TCPStore(
+RuntimeError: The server socket has failed to listen on any local network address. The server socket has failed to bind to [::]:44444 (errno: 98 - Address already in use). The server socket has failed to bind to 0.0.0.0:44444 (errno: 98 - Address already in use).

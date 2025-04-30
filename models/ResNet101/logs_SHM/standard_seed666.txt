@@ -1,0 +1,144 @@
+main.py:95: UserWarning: You have chosen to seed training. This will turn on the CUDNN deterministic setting, which can slow down your training considerably! You may see unexpected behavior when restarting from checkpoints.
+  warnings.warn('You have chosen to seed training. '
+Use GPU: 3 for training
+=> creating model 'wide_resnet101_2'
+Standard Dithering Hook
+Use GPU: 2 for training
+=> creating model 'wide_resnet101_2'
+Standard Dithering Hook
+Use GPU: 1 for training
+=> creating model 'wide_resnet101_2'
+Standard Dithering Hook
+Use GPU: 0 for training
+=> creating model 'wide_resnet101_2'
+Standard Dithering Hook
+Epoch: [0][  1/782]	Time  3.793 ( 3.793)	Loss 6.9340e+00 (6.9340e+00)	Acc@1   0.00 (  0.00)	Acc@5   0.00 (  0.00)
+Epoch: [0][ 11/782]	Time  0.193 ( 0.517)	Loss 1.3569e+01 (1.1957e+01)	Acc@1   0.00 (  1.14)	Acc@5   0.00 (  5.11)
+Epoch: [0][ 21/782]	Time  0.183 ( 0.359)	Loss 1.0077e+01 (1.1232e+01)	Acc@1   6.25 (  0.89)	Acc@5  18.75 (  4.76)
+Epoch: [0][ 31/782]	Time  0.186 ( 0.304)	Loss 8.6326e+00 (1.0069e+01)	Acc@1   0.00 (  1.21)	Acc@5   0.00 (  5.65)
+Epoch: [0][ 41/782]	Time  0.191 ( 0.276)	Loss 5.8405e+00 (9.3087e+00)	Acc@1   0.00 (  1.22)	Acc@5   6.25 (  5.34)
+Epoch: [0][ 51/782]	Time  0.195 ( 0.259)	Loss 5.0270e+00 (8.7512e+00)	Acc@1   0.00 (  1.23)	Acc@5   0.00 (  5.64)
+Epoch: [0][ 61/782]	Time  0.188 ( 0.247)	Loss 4.6715e+00 (8.2129e+00)	Acc@1   6.25 (  1.23)	Acc@5   6.25 (  5.84)
+Epoch: [0][ 71/782]	Time  0.182 ( 0.239)	Loss 5.3352e+00 (7.8064e+00)	Acc@1   0.00 (  1.14)	Acc@5   6.25 (  5.90)
+Epoch: [0][ 81/782]	Time  0.196 ( 0.232)	Loss 5.2125e+00 (7.4758e+00)	Acc@1   0.00 (  1.08)	Acc@5   6.25 (  5.79)
+Epoch: [0][ 91/782]	Time  0.198 ( 0.227)	Loss 5.3060e+00 (7.1972e+00)	Acc@1   0.00 (  0.96)	Acc@5   0.00 (  5.63)
+Epoch: [0][101/782]	Time  0.187 ( 0.223)	Loss 4.8014e+00 (6.9683e+00)	Acc@1   6.25 (  0.93)	Acc@5   6.25 (  5.57)
+Epoch: [0][111/782]	Time  0.188 ( 0.220)	Loss 4.8564e+00 (6.7705e+00)	Acc@1   0.00 (  0.90)	Acc@5   0.00 (  5.86)
+Epoch: [0][121/782]	Time  0.192 ( 0.217)	Loss 4.7371e+00 (6.6031e+00)	Acc@1   0.00 (  0.98)	Acc@5  12.50 (  6.10)
+Epoch: [0][131/782]	Time  0.192 ( 0.215)	Loss 4.9633e+00 (6.4600e+00)	Acc@1   0.00 (  0.95)	Acc@5   0.00 (  6.20)
+Epoch: [0][141/782]	Time  0.185 ( 0.213)	Loss 4.5226e+00 (6.3426e+00)	Acc@1   0.00 (  0.98)	Acc@5  18.75 (  6.25)
+Epoch: [0][151/782]	Time  0.189 ( 0.211)	Loss 4.5175e+00 (6.2359e+00)	Acc@1   0.00 (  0.99)	Acc@5  12.50 (  6.21)
+Epoch: [0][161/782]	Time  0.187 ( 0.209)	Loss 4.8890e+00 (6.1447e+00)	Acc@1   0.00 (  1.01)	Acc@5   6.25 (  6.17)
+Epoch: [0][171/782]	Time  0.183 ( 0.208)	Loss 4.7083e+00 (6.0625e+00)	Acc@1   0.00 (  0.99)	Acc@5   0.00 (  6.07)
+Epoch: [0][181/782]	Time  0.195 ( 0.207)	Loss 4.6740e+00 (5.9884e+00)	Acc@1   0.00 (  1.04)	Acc@5   6.25 (  6.08)
+Epoch: [0][191/782]	Time  0.197 ( 0.206)	Loss 4.5207e+00 (5.9186e+00)	Acc@1   6.25 (  1.08)	Acc@5  12.50 (  6.18)
+Epoch: [0][201/782]	Time  0.183 ( 0.205)	Loss 4.5933e+00 (5.8554e+00)	Acc@1   0.00 (  1.09)	Acc@5   6.25 (  6.19)
+Epoch: [0][211/782]	Time  0.196 ( 0.204)	Loss 4.8867e+00 (5.8001e+00)	Acc@1   0.00 (  1.07)	Acc@5   6.25 (  6.31)
+Epoch: [0][221/782]	Time  0.192 ( 0.203)	Loss 4.8404e+00 (5.7459e+00)	Acc@1   0.00 (  1.13)	Acc@5   6.25 (  6.39)
+Epoch: [0][231/782]	Time  0.181 ( 0.203)	Loss 4.8209e+00 (5.6968e+00)	Acc@1   0.00 (  1.08)	Acc@5   0.00 (  6.47)
+Epoch: [0][241/782]	Time  0.192 ( 0.202)	Loss 4.6483e+00 (5.6552e+00)	Acc@1   6.25 (  1.22)	Acc@5  12.50 (  6.69)
+Epoch: [0][251/782]	Time  0.184 ( 0.202)	Loss 4.6812e+00 (5.6162e+00)	Acc@1   0.00 (  1.22)	Acc@5   6.25 (  6.72)
+Epoch: [0][261/782]	Time  0.182 ( 0.201)	Loss 4.6768e+00 (5.5804e+00)	Acc@1   6.25 (  1.32)	Acc@5   6.25 (  6.87)
+Epoch: [0][271/782]	Time  0.182 ( 0.201)	Loss 4.5456e+00 (5.5440e+00)	Acc@1   6.25 (  1.34)	Acc@5  25.00 (  7.15)
+Epoch: [0][281/782]	Time  0.188 ( 0.200)	Loss 4.6930e+00 (5.5125e+00)	Acc@1   0.00 (  1.31)	Acc@5   6.25 (  7.21)
+Epoch: [0][291/782]	Time  0.193 ( 0.200)	Loss 4.4584e+00 (5.4796e+00)	Acc@1   6.25 (  1.35)	Acc@5  12.50 (  7.28)
+Epoch: [0][301/782]	Time  0.182 ( 0.199)	Loss 4.5880e+00 (5.4477e+00)	Acc@1   0.00 (  1.39)	Acc@5   6.25 (  7.48)
+Epoch: [0][311/782]	Time  0.184 ( 0.199)	Loss 4.2973e+00 (5.4182e+00)	Acc@1   0.00 (  1.39)	Acc@5  18.75 (  7.54)
+Epoch: [0][321/782]	Time  0.192 ( 0.198)	Loss 4.7447e+00 (5.3909e+00)	Acc@1   0.00 (  1.42)	Acc@5   0.00 (  7.67)
+Epoch: [0][331/782]	Time  0.197 ( 0.198)	Loss 4.2933e+00 (5.3605e+00)	Acc@1   0.00 (  1.49)	Acc@5  18.75 (  7.89)
+Epoch: [0][341/782]	Time  0.183 ( 0.198)	Loss 4.5794e+00 (5.3367e+00)	Acc@1   0.00 (  1.48)	Acc@5   0.00 (  7.99)
+Epoch: [0][351/782]	Time  0.186 ( 0.198)	Loss 4.3102e+00 (5.3112e+00)	Acc@1   6.25 (  1.53)	Acc@5  18.75 (  8.26)
+Epoch: [0][361/782]	Time  0.182 ( 0.197)	Loss 4.2141e+00 (5.2905e+00)	Acc@1  12.50 (  1.61)	Acc@5  31.25 (  8.36)
+Epoch: [0][371/782]	Time  0.182 ( 0.197)	Loss 4.5298e+00 (5.2686e+00)	Acc@1   0.00 (  1.62)	Acc@5  18.75 (  8.47)
+Epoch: [0][381/782]	Time  0.187 ( 0.197)	Loss 4.2318e+00 (5.2468e+00)	Acc@1  12.50 (  1.67)	Acc@5  12.50 (  8.51)
+Epoch: [0][391/782]	Time  0.192 ( 0.196)	Loss 4.4536e+00 (5.2283e+00)	Acc@1   6.25 (  1.69)	Acc@5   6.25 (  8.57)
+Epoch: [0][401/782]	Time  0.191 ( 0.196)	Loss 4.6613e+00 (5.2073e+00)	Acc@1   0.00 (  1.75)	Acc@5   0.00 (  8.70)
+Epoch: [0][411/782]	Time  0.183 ( 0.196)	Loss 4.2482e+00 (5.1882e+00)	Acc@1   6.25 (  1.82)	Acc@5  18.75 (  8.79)
+Epoch: [0][421/782]	Time  0.183 ( 0.196)	Loss 4.6050e+00 (5.1726e+00)	Acc@1   0.00 (  1.84)	Acc@5   6.25 (  8.77)
+Epoch: [0][431/782]	Time  0.188 ( 0.196)	Loss 4.4128e+00 (5.1575e+00)	Acc@1   0.00 (  1.86)	Acc@5  18.75 (  8.85)
+Epoch: [0][441/782]	Time  0.185 ( 0.195)	Loss 4.3720e+00 (5.1409e+00)	Acc@1   6.25 (  1.90)	Acc@5  31.25 (  9.08)
+Epoch: [0][451/782]	Time  0.196 ( 0.195)	Loss 4.7328e+00 (5.1235e+00)	Acc@1   0.00 (  1.97)	Acc@5   6.25 (  9.24)
+Epoch: [0][461/782]	Time  0.182 ( 0.195)	Loss 4.4038e+00 (5.1107e+00)	Acc@1  12.50 (  2.01)	Acc@5  18.75 (  9.26)
+Epoch: [0][471/782]	Time  0.183 ( 0.195)	Loss 4.4366e+00 (5.0968e+00)	Acc@1   6.25 (  2.02)	Acc@5  12.50 (  9.34)
+Epoch: [0][481/782]	Time  0.186 ( 0.195)	Loss 4.4618e+00 (5.0839e+00)	Acc@1   6.25 (  2.08)	Acc@5  18.75 (  9.46)
+Epoch: [0][491/782]	Time  0.183 ( 0.195)	Loss 4.6078e+00 (5.0728e+00)	Acc@1   0.00 (  2.10)	Acc@5   6.25 (  9.51)
+Epoch: [0][501/782]	Time  0.196 ( 0.195)	Loss 4.7301e+00 (5.0621e+00)	Acc@1   0.00 (  2.12)	Acc@5   6.25 (  9.57)
+Epoch: [0][511/782]	Time  0.186 ( 0.195)	Loss 4.2975e+00 (5.0488e+00)	Acc@1   0.00 (  2.12)	Acc@5  12.50 (  9.66)
+Epoch: [0][521/782]	Time  0.185 ( 0.194)	Loss 4.5923e+00 (5.0374e+00)	Acc@1   0.00 (  2.20)	Acc@5  18.75 (  9.78)
+Epoch: [0][531/782]	Time  0.197 ( 0.194)	Loss 4.5703e+00 (5.0254e+00)	Acc@1   0.00 (  2.21)	Acc@5   6.25 (  9.78)
+Epoch: [0][541/782]	Time  0.188 ( 0.194)	Loss 4.4143e+00 (5.0155e+00)	Acc@1   0.00 (  2.21)	Acc@5  18.75 (  9.81)
+Epoch: [0][551/782]	Time  0.194 ( 0.194)	Loss 4.4991e+00 (5.0047e+00)	Acc@1   0.00 (  2.19)	Acc@5   6.25 (  9.80)
+Epoch: [0][561/782]	Time  0.185 ( 0.194)	Loss 4.6707e+00 (4.9937e+00)	Acc@1   0.00 (  2.24)	Acc@5   0.00 (  9.92)
+Epoch: [0][571/782]	Time  0.183 ( 0.194)	Loss 4.4503e+00 (4.9841e+00)	Acc@1   0.00 (  2.22)	Acc@5   6.25 (  9.92)
+Epoch: [0][581/782]	Time  0.195 ( 0.194)	Loss 4.6476e+00 (4.9761e+00)	Acc@1   0.00 (  2.22)	Acc@5   6.25 (  9.96)
+Epoch: [0][591/782]	Time  0.186 ( 0.194)	Loss 4.4474e+00 (4.9650e+00)	Acc@1   6.25 (  2.31)	Acc@5  12.50 ( 10.13)
+Epoch: [0][601/782]	Time  0.189 ( 0.194)	Loss 4.3593e+00 (4.9538e+00)	Acc@1   0.00 (  2.37)	Acc@5   6.25 ( 10.28)
+Epoch: [0][611/782]	Time  0.188 ( 0.194)	Loss 4.1024e+00 (4.9446e+00)	Acc@1   6.25 (  2.37)	Acc@5  31.25 ( 10.39)
+Epoch: [0][621/782]	Time  0.188 ( 0.193)	Loss 4.2731e+00 (4.9346e+00)	Acc@1   0.00 (  2.43)	Acc@5  25.00 ( 10.50)
+Epoch: [0][631/782]	Time  0.183 ( 0.193)	Loss 4.5451e+00 (4.9248e+00)	Acc@1   0.00 (  2.48)	Acc@5   6.25 ( 10.59)
+Epoch: [0][641/782]	Time  0.192 ( 0.193)	Loss 4.1328e+00 (4.9161e+00)	Acc@1  12.50 (  2.53)	Acc@5  25.00 ( 10.64)
+Epoch: [0][651/782]	Time  0.196 ( 0.193)	Loss 4.7424e+00 (4.9102e+00)	Acc@1   0.00 (  2.52)	Acc@5   0.00 ( 10.64)
+Epoch: [0][661/782]	Time  0.186 ( 0.193)	Loss 4.2604e+00 (4.9024e+00)	Acc@1   0.00 (  2.55)	Acc@5  12.50 ( 10.76)
+Epoch: [0][671/782]	Time  0.182 ( 0.193)	Loss 4.4450e+00 (4.8946e+00)	Acc@1   6.25 (  2.61)	Acc@5  25.00 ( 10.90)
+Epoch: [0][681/782]	Time  0.187 ( 0.193)	Loss 4.1744e+00 (4.8870e+00)	Acc@1   6.25 (  2.66)	Acc@5  25.00 ( 10.99)
+Epoch: [0][691/782]	Time  0.183 ( 0.193)	Loss 4.2102e+00 (4.8794e+00)	Acc@1   6.25 (  2.68)	Acc@5  25.00 ( 11.01)
+Epoch: [0][701/782]	Time  0.186 ( 0.193)	Loss 4.3779e+00 (4.8724e+00)	Acc@1   6.25 (  2.70)	Acc@5   6.25 ( 11.08)
+Epoch: [0][711/782]	Time  0.188 ( 0.193)	Loss 4.6109e+00 (4.8641e+00)	Acc@1   0.00 (  2.75)	Acc@5   6.25 ( 11.20)
+Epoch: [0][721/782]	Time  0.188 ( 0.193)	Loss 4.8300e+00 (4.8566e+00)	Acc@1   0.00 (  2.81)	Acc@5   6.25 ( 11.26)
+Epoch: [0][731/782]	Time  0.185 ( 0.192)	Loss 4.2583e+00 (4.8508e+00)	Acc@1   6.25 (  2.80)	Acc@5  18.75 ( 11.29)
+Epoch: [0][741/782]	Time  0.189 ( 0.192)	Loss 4.1480e+00 (4.8442e+00)	Acc@1   0.00 (  2.81)	Acc@5  25.00 ( 11.40)
+Epoch: [0][751/782]	Time  0.194 ( 0.192)	Loss 4.5767e+00 (4.8373e+00)	Acc@1   0.00 (  2.84)	Acc@5   6.25 ( 11.48)
+Epoch: [0][761/782]	Time  0.182 ( 0.192)	Loss 3.9924e+00 (4.8300e+00)	Acc@1   6.25 (  2.87)	Acc@5  31.25 ( 11.56)
+Epoch: [0][771/782]	Time  0.185 ( 0.192)	Loss 4.4627e+00 (4.8239e+00)	Acc@1   6.25 (  2.89)	Acc@5   6.25 ( 11.59)
+Epoch: [0][781/782]	Time  0.196 ( 0.192)	Loss 4.2788e+00 (4.8164e+00)	Acc@1  12.50 (  2.95)	Acc@5  31.25 ( 11.73)
+ * Time 0.192 Loss 4.816 Acc@1 2.960 Acc@5 11.736
+Test: [  1/157]	Time  1.338 ( 1.338)	Loss 3.9217e+00 (3.9217e+00)	Acc@1   6.25 (  6.25)	Acc@5  37.50 ( 37.50)
+Test: [ 11/157]	Time  0.115 ( 0.193)	Loss 4.1295e+00 (4.0530e+00)	Acc@1   0.00 (  4.55)	Acc@5  18.75 ( 27.27)
+Test: [ 21/157]	Time  0.065 ( 0.136)	Loss 4.6264e+00 (7.3329e+00)	Acc@1   0.00 (  2.98)	Acc@5   0.00 ( 20.83)
+Test: [ 31/157]	Time  0.069 ( 0.115)	Loss 4.1846e+00 (6.3709e+00)	Acc@1   0.00 (  3.23)	Acc@5   0.00 ( 18.55)
+Test: [ 41/157]	Time  0.072 ( 0.104)	Loss 4.0163e+00 (5.8867e+00)	Acc@1   0.00 (  2.59)	Acc@5  18.75 ( 15.55)
+Test: [ 51/157]	Time  0.064 ( 0.098)	Loss 4.6224e+00 (5.6417e+00)	Acc@1   0.00 (  2.08)	Acc@5   0.00 ( 12.99)
+Test: [ 61/157]	Time  0.075 ( 0.094)	Loss 4.6780e+00 (5.4322e+00)	Acc@1   0.00 (  4.20)	Acc@5   6.25 ( 15.16)
+Test: [ 71/157]	Time  0.080 ( 0.092)	Loss 4.1979e+00 (5.2745e+00)	Acc@1   0.00 (  3.70)	Acc@5  12.50 ( 15.23)
+Test: [ 81/157]	Time  0.074 ( 0.089)	Loss 4.3975e+00 (5.1329e+00)	Acc@1   0.00 (  3.94)	Acc@5   0.00 ( 15.74)
+Test: [ 91/157]	Time  0.076 ( 0.087)	Loss 5.0865e+00 (5.0774e+00)	Acc@1   0.00 (  3.71)	Acc@5   6.25 ( 15.25)
+Test: [101/157]	Time  0.067 ( 0.085)	Loss 4.2952e+00 (5.0484e+00)	Acc@1   0.00 (  3.34)	Acc@5  25.00 ( 14.42)
+Test: [111/157]	Time  0.075 ( 0.084)	Loss 4.4965e+00 (5.0092e+00)	Acc@1   0.00 (  3.04)	Acc@5   0.00 ( 14.02)
+Test: [121/157]	Time  0.075 ( 0.083)	Loss 1.6566e+01 (5.0796e+00)	Acc@1   6.25 (  2.84)	Acc@5  31.25 ( 13.33)
+Test: [131/157]	Time  0.079 ( 0.082)	Loss 5.0285e+00 (5.0710e+00)	Acc@1   0.00 (  3.53)	Acc@5   0.00 ( 14.55)
+Test: [141/157]	Time  0.066 ( 0.081)	Loss 3.6344e+00 (5.0099e+00)	Acc@1   6.25 (  3.72)	Acc@5  43.75 ( 15.20)
+Test: [151/157]	Time  0.113 ( 0.082)	Loss 4.5035e+00 (4.9333e+00)	Acc@1   0.00 (  4.26)	Acc@5   6.25 ( 16.97)
+ *   Acc@1 4.570 Acc@5 16.870
+Traceback (most recent call last):
+  File "main.py", line 549, in <module>
+    main()
+  File "main.py", line 120, in main
+    mp.spawn(main_worker, nprocs=ngpus_per_node, args=(ngpus_per_node, args))
+  File "/usr/local/lib/python3.8/dist-packages/torch/multiprocessing/spawn.py", line 240, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method='spawn')
+  File "/usr/local/lib/python3.8/dist-packages/torch/multiprocessing/spawn.py", line 198, in start_processes
+    while not context.join():
+  File "/usr/local/lib/python3.8/dist-packages/torch/multiprocessing/spawn.py", line 109, in join
+    ready = multiprocessing.connection.wait(
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt
+Epoch: [1][  1/782]	Time  1.389 ( 1.389)	Loss 4.1992e+00 (4.1992e+00)	Acc@1  12.50 ( 12.50)	Acc@5  37.50 ( 37.50)
+Epoch: [1][ 11/782]	Time  0.191 ( 0.297)	Loss 4.2784e+00 (4.2539e+00)	Acc@1   0.00 (  4.55)	Acc@5  12.50 ( 18.18)
+Epoch: [1][ 21/782]	Time  0.185 ( 0.243)	Loss 4.4063e+00 (4.3307e+00)	Acc@1   6.25 (  5.36)	Acc@5  18.75 ( 17.56)
+Epoch: [1][ 31/782]	Time  0.191 ( 0.226)	Loss 4.2674e+00 (4.3336e+00)	Acc@1   0.00 (  4.84)	Acc@5   6.25 ( 15.73)
+Epoch: [1][ 41/782]	Time  0.182 ( 0.217)	Loss 4.1563e+00 (4.3220e+00)	Acc@1   6.25 (  5.49)	Acc@5  18.75 ( 16.16)
+Epoch: [1][ 51/782]	Time  0.184 ( 0.211)	Loss 4.0507e+00 (4.3077e+00)	Acc@1   6.25 (  5.02)	Acc@5  31.25 ( 16.79)
+Epoch: [1][ 61/782]	Time  0.192 ( 0.207)	Loss 4.4502e+00 (4.3096e+00)	Acc@1   0.00 (  5.02)	Acc@5  18.75 ( 16.70)
+Epoch: [1][ 71/782]	Time  0.186 ( 0.204)	Loss 4.0683e+00 (4.3067e+00)	Acc@1   6.25 (  4.93)	Acc@5  31.25 ( 17.52)
+Epoch: [1][ 81/782]	Time  0.183 ( 0.201)	Loss 4.2145e+00 (4.3276e+00)	Acc@1   6.25 (  4.94)	Acc@5  25.00 ( 17.98)
+Epoch: [1][ 91/782]	Time  0.185 ( 0.200)	Loss 4.2765e+00 (4.3317e+00)	Acc@1   6.25 (  4.60)	Acc@5  12.50 ( 17.45)
+Epoch: [1][101/782]	Time  0.184 ( 0.199)	Loss 4.1848e+00 (4.3191e+00)	Acc@1   6.25 (  4.46)	Acc@5  25.00 ( 17.57)
+Epoch: [1][111/782]	Time  0.183 ( 0.198)	Loss 4.3067e+00 (4.3121e+00)	Acc@1   0.00 (  4.67)	Acc@5  31.25 ( 17.96)
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt

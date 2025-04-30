@@ -1,0 +1,41 @@
+NCCL_P2P_DISABLE: 1
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='default', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='default', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='default', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='default', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Default Hook
+Default Hook
+Default Hook
+Default Hook
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [1] loss: 0.055247 metric: 0.973304 sparse 0.00% time: 442.661387 s
+Training [1] loss: 0.055247 metric: 0.973304 sparse 0.00% time: 442.662393 s
+Validation [1] loss: 0.127788 metric: 0.720981 sparse 0.00% time: 442.676879 s
+**************************************************
+Training [1] loss: 0.055247 metric: 0.973304 sparse 0.00% time: 442.675126 s
+Validation [1] loss: 0.127788 metric: 0.720981 sparse 0.00% time: 442.677755 s
+**************************************************
+Training [1] loss: 0.055247 metric: 0.973304 sparse 0.00% time: 442.683445 s
+Validation [1] loss: 0.127788 metric: 0.720981 sparse 0.00% time: 442.690750 s
+**************************************************
+Validation [1] loss: 0.127788 metric: 0.720981 sparse 0.00% time: 442.699312 s
+**************************************************
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [2] loss: 0.029043 metric: 0.991609 sparse 0.00% time: 440.583139 s
+Training [2] loss: 0.029043 metric: 0.991609 sparse 0.00% time: 440.590820 s
+Training [2] loss: 0.029043 metric: 0.991609 sparse 0.00% time: 440.605404 s
+Training [2] loss: 0.029043 metric: 0.991609 sparse 0.00% time: 440.607686 s
+Validation [2] loss: 0.176843 metric: 0.700233 sparse 0.00% time: 440.598727 s
+**************************************************
+Validation [2] loss: 0.176843 metric: 0.700233 sparse 0.00% time: 440.606244 s
+**************************************************
+Validation [2] loss: 0.176843 metric: 0.700233 sparse 0.00% time: 440.621043 s
+**************************************************
+Validation [2] loss: 0.176843 metric: 0.700233 sparse 0.00% time: 440.623234 s
+**************************************************

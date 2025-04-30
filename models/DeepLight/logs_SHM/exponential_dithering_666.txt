@@ -1,0 +1,41 @@
+NCCL_P2P_DISABLE: 1
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='exponential_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='exponential_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='exponential_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='exponential_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Exponential Dithering Hook
+Exponential Dithering Hook
+Exponential Dithering Hook
+Exponential Dithering Hook
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [1] loss: 0.044956 metric: 0.986722 sparse 0.00% time: 143.510866 s
+Training [1] loss: 0.044956 metric: 0.986722 sparse 0.00% time: 143.515167 s
+Training [1] loss: 0.044956 metric: 0.986722 sparse 0.00% time: 143.514199 s
+Training [1] loss: 0.044956 metric: 0.986722 sparse 0.00% time: 143.521652 s
+Validation [1] loss: 0.142966 metric: 0.709067 sparse 0.00% time: 143.526436 s
+**************************************************
+Validation [1] loss: 0.142966 metric: 0.709067 sparse 0.00% time: 143.530684 s
+**************************************************
+Validation [1] loss: 0.142966 metric: 0.709067 sparse 0.00% time: 143.529611 s
+**************************************************
+Validation [1] loss: 0.142966 metric: 0.709067 sparse 0.00% time: 143.536936 s
+**************************************************
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [2] loss: 0.025369 metric: 0.994250 sparse 0.00% time: 141.801990 s
+Training [2] loss: 0.025369 metric: 0.994250 sparse 0.00% time: 141.814468 s
+Training [2] loss: 0.025369 metric: 0.994250 sparse 0.00% time: 141.816661 s
+Training [2] loss: 0.025369 metric: 0.994250 sparse 0.00% time: 141.821256 s
+Validation [2] loss: 0.174692 metric: 0.697940 sparse 0.00% time: 141.817082 s
+**************************************************
+Validation [2] loss: 0.174692 metric: 0.697940 sparse 0.00% time: 141.829677 s
+**************************************************
+Validation [2] loss: 0.174692 metric: 0.697940 sparse 0.00% time: 141.832079 s
+**************************************************
+Validation [2] loss: 0.174692 metric: 0.697940 sparse 0.00% time: 141.836694 s
+**************************************************

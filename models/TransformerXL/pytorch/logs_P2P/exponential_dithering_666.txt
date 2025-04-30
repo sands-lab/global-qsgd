@@ -1,0 +1,292 @@
+Run training...
+train.py:37: UserWarning: APEX AMP is unavailable
+  warnings.warn('APEX AMP is unavailable')
+train.py:37: UserWarning: APEX AMP is unavailable
+  warnings.warn('APEX AMP is unavailable')
+train.py:37: UserWarning: APEX AMP is unavailable
+  warnings.warn('APEX AMP is unavailable')
+train.py:37: UserWarning: APEX AMP is unavailable
+  warnings.warn('APEX AMP is unavailable')
+1: thread affinity: {1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93, 97, 101, 105, 109, 113, 117, 121, 125}
+0: thread affinity: {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116, 120, 124}
+2: thread affinity: {2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, 102, 106, 110, 114, 118, 122, 126}
+3: thread affinity: {3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63, 67, 71, 75, 79, 83, 87, 91, 95, 99, 103, 107, 111, 115, 119, 123, 127}
+Experiment dir : TF32/DP32_666
+Namespace(adaptive=True, adjust_freq=1000, affinity='socket_unique_interleaved', amp='apex', apex_amp_opt_level='O2', append_dataset=False, append_time=False, attn_type=0, batch_chunk=2, batch_size=256, clamp_len=-1, clip=0.25, clip_nonemb=False, cuda=True, d_embed=512, d_head=64, d_inner=2048, d_model=512, data='./wikitext-103/', dataset='wt103', debug=False, decay_rate=0.5, div_val=1, dllog_file='train_log.json', dropatt=0.0, dropout=0.1, emb_init='normal', emb_init_range=0.01, eta_min=0.001, eval_batch_size=16, eval_interval=500, eval_max_steps=-1, eval_tgt_len=192, ext_len=0, fp16=False, gpu0_bsz=-1, init='normal', init_range=0.1, init_std=0.02, local_batch_size=None, local_rank=0, log_all_ranks=False, log_interval=10, lr=0.01, lr_min=0.0, max_step=40000, max_step_scheduler=None, mem_len=192, method='exponential_dithering', mom=0.0, multi_gpu='ddp', n_head=8, n_layer=16, no_env=False, no_eval=False, no_test=False, not_tied=False, optim='jitlamb', patience=0, powersgd_rank=32, pre_lnorm=False, proj_init_std=0.01, restart='', roll=True, same_length=False, sample_softmax=-1, save_all=False, scheduler='cosine', seed=666, swap_mem=False, target_perplexity=None, target_throughput=None, tgt_len=192, tied=True, txtlog_file='train_log.log', varlen=False, vocab='word', warmup_step=1000, weight_decay=0.0, work_dir='TF32/DP32_666')
+world size: 4
+Collecting environment information...
+PyTorch version: 1.13.1+cu116
+Is debug build: False
+CUDA used to build PyTorch: 11.6
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 20.04.6 LTS (x86_64)
+GCC version: (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.31
+
+Python version: 3.8.10 (default, Nov 22 2023, 10:22:35)  [GCC 9.4.0] (64-bit runtime)
+Python platform: Linux-5.15.0-97-generic-x86_64-with-glibc2.29
+Is CUDA available: True
+CUDA runtime version: 11.6.124
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA A100-SXM4-80GB
+GPU 1: NVIDIA A100-SXM4-80GB
+GPU 2: NVIDIA A100-SXM4-80GB
+GPU 3: NVIDIA A100-SXM4-80GB
+
+Nvidia driver version: 535.183.06
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+Versions of relevant libraries:
+[pip3] numpy==1.24.1
+[pip3] torch==1.13.1+cu116
+[pip3] torchaudio==0.13.1+cu116
+[pip3] torchvision==0.14.1+cu116
+[conda] Could not collect
+Loading cached dataset...
+Model Parameters:  191950298
+Exponential Dithering Hook
+====================================================================================================
+    - work_dir : TF32/DP32_666
+    - append_dataset : False
+    - append_time : False
+    - cuda : True
+    - fp16 : False
+Model Parameters:     - restart : 
+ 191950298
+Exponential Dithering Hook
+Model Parameters:     - debug : False
+ Model Parameters: 191950298 
+    - log_all_ranks : False
+191950298Exponential Dithering Hook
+
+Exponential Dithering Hook
+    - dllog_file : train_log.json
+    - txtlog_file : train_log.log
+    - save_all : False
+    - no_env : False
+    - no_eval : False
+    - no_test : False
+    - log_interval : 10
+    - target_throughput : None
+    - target_perplexity : None
+    - apex_amp_opt_level : O2
+    - amp : apex
+    - affinity : socket_unique_interleaved
+    - method : exponential_dithering
+    - data : ./wikitext-103/
+    - dataset : wt103
+    - vocab : word
+    - n_layer : 16
+    - n_head : 8
+    - d_head : 64
+    - d_embed : 512
+    - d_model : 512
+    - d_inner : 2048
+    - dropout : 0.1
+    - dropatt : 0.0
+    - pre_lnorm : False
+    - attn_type : 0
+    - not_tied : False
+    - clamp_len : -1
+    - adaptive : True
+    - div_val : 1
+    - sample_softmax : -1
+    - init : normal
+    - emb_init : normal
+    - init_range : 0.1
+    - emb_init_range : 0.01
+    - init_std : 0.02
+    - proj_init_std : 0.01
+    - optim : jitlamb
+    - lr : 0.01
+    - mom : 0.0
+    - scheduler : cosine
+    - max_step_scheduler : None
+    - warmup_step : 1000
+    - adjust_freq : 1000
+    - decay_rate : 0.5
+    - lr_min : 0.0
+    - clip : 0.25
+    - weight_decay : 0.0
+    - clip_nonemb : False
+    - patience : 0
+    - eta_min : 0.001
+    - max_step : 40000
+    - batch_size : 256
+    - local_batch_size : None
+    - batch_chunk : 2
+    - roll : True
+    - tgt_len : 192
+    - ext_len : 0
+    - mem_len : 192
+    - seed : 666
+    - multi_gpu : ddp
+    - gpu0_bsz : -1
+    - same_length : False
+    - varlen : False
+    - swap_mem : False
+    - eval_tgt_len : 192
+    - eval_batch_size : 16
+    - eval_max_steps : -1
+    - eval_interval : 500
+    - local_rank : 0
+    - powersgd_rank : 32
+    - tied : True
+    - n_token : 267735
+    - n_all_param : 191950298
+    - n_nonemb_param : 54599680
+====================================================================================================
+#params = 191950298
+#non emb params = 54599680
+[W reducer.cpp:1298] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+[W reducer.cpp:1298] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+[W reducer.cpp:1298] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+[W reducer.cpp:1298] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+| epoch   1 step       10 | batches     10 / 2101 | lr 1.000e-04 | ms/batch 831.3 | tok/s   59146 | loss  9.80 | ppl  18096.56
+| epoch   1 step       20 | batches     20 / 2101 | lr 2.000e-04 | ms/batch 618.6 | tok/s   79463 | loss  9.67 | ppl  15862.63
+| epoch   1 step       30 | batches     30 / 2101 | lr 3.000e-04 | ms/batch 618.6 | tok/s   79455 | loss  9.60 | ppl  14835.47
+| epoch   1 step       40 | batches     40 / 2101 | lr 4.000e-04 | ms/batch 617.5 | tok/s   79597 | loss  9.55 | ppl  14047.66
+| epoch   1 step       50 | batches     50 / 2101 | lr 5.000e-04 | ms/batch 616.4 | tok/s   79741 | loss  9.49 | ppl  13169.17
+| epoch   1 step       60 | batches     60 / 2101 | lr 6.000e-04 | ms/batch 616.9 | tok/s   79681 | loss  9.43 | ppl  12475.06
+| epoch   1 step       70 | batches     70 / 2101 | lr 7.000e-04 | ms/batch 617.3 | tok/s   79619 | loss  9.36 | ppl  11581.56
+| epoch   1 step       80 | batches     80 / 2101 | lr 8.000e-04 | ms/batch 617.9 | tok/s   79550 | loss  9.27 | ppl  10655.63
+| epoch   1 step       90 | batches     90 / 2101 | lr 9.000e-04 | ms/batch 616.0 | tok/s   79791 | loss  9.19 | ppl   9768.64
+| epoch   1 step      100 | batches    100 / 2101 | lr 1.000e-03 | ms/batch 618.0 | tok/s   79538 | loss  9.10 | ppl   8947.82
+| epoch   1 step      110 | batches    110 / 2101 | lr 1.100e-03 | ms/batch 617.2 | tok/s   79640 | loss  9.01 | ppl   8180.72
+| epoch   1 step      120 | batches    120 / 2101 | lr 1.200e-03 | ms/batch 615.8 | tok/s   79822 | loss  8.93 | ppl   7570.14
+| epoch   1 step      130 | batches    130 / 2101 | lr 1.300e-03 | ms/batch 615.3 | tok/s   79888 | loss  8.83 | ppl   6833.86
+| epoch   1 step      140 | batches    140 / 2101 | lr 1.400e-03 | ms/batch 616.5 | tok/s   79728 | loss  8.77 | ppl   6455.88
+| epoch   1 step      150 | batches    150 / 2101 | lr 1.500e-03 | ms/batch 615.0 | tok/s   79926 | loss  8.68 | ppl   5912.82
+| epoch   1 step      160 | batches    160 / 2101 | lr 1.600e-03 | ms/batch 616.4 | tok/s   79739 | loss  8.61 | ppl   5496.21
+| epoch   1 step      170 | batches    170 / 2101 | lr 1.700e-03 | ms/batch 615.2 | tok/s   79892 | loss  8.54 | ppl   5104.36
+| epoch   1 step      180 | batches    180 / 2101 | lr 1.800e-03 | ms/batch 615.8 | tok/s   79817 | loss  8.45 | ppl   4670.04
+| epoch   1 step      190 | batches    190 / 2101 | lr 1.900e-03 | ms/batch 615.6 | tok/s   79847 | loss  8.35 | ppl   4238.80
+| epoch   1 step      200 | batches    200 / 2101 | lr 2.000e-03 | ms/batch 616.6 | tok/s   79718 | loss  8.27 | ppl   3889.61
+| epoch   1 step      210 | batches    210 / 2101 | lr 2.100e-03 | ms/batch 615.5 | tok/s   79855 | loss  8.14 | ppl   3441.96
+| epoch   1 step      220 | batches    220 / 2101 | lr 2.200e-03 | ms/batch 616.0 | tok/s   79791 | loss  8.06 | ppl   3156.55
+| epoch   1 step      230 | batches    230 / 2101 | lr 2.300e-03 | ms/batch 616.0 | tok/s   79787 | loss  7.95 | ppl   2843.60
+| epoch   1 step      240 | batches    240 / 2101 | lr 2.400e-03 | ms/batch 614.6 | tok/s   79972 | loss  7.85 | ppl   2566.76
+| epoch   1 step      250 | batches    250 / 2101 | lr 2.500e-03 | ms/batch 615.0 | tok/s   79924 | loss  7.78 | ppl   2384.25
+| epoch   1 step      260 | batches    260 / 2101 | lr 2.600e-03 | ms/batch 615.0 | tok/s   79918 | loss  7.71 | ppl   2228.00
+| epoch   1 step      270 | batches    270 / 2101 | lr 2.700e-03 | ms/batch 617.1 | tok/s   79653 | loss  7.62 | ppl   2044.51
+| epoch   1 step      280 | batches    280 / 2101 | lr 2.800e-03 | ms/batch 616.5 | tok/s   79732 | loss  7.52 | ppl   1847.59
+| epoch   1 step      290 | batches    290 / 2101 | lr 2.900e-03 | ms/batch 615.6 | tok/s   79849 | loss  7.44 | ppl   1709.94
+| epoch   1 step      300 | batches    300 / 2101 | lr 3.000e-03 | ms/batch 615.3 | tok/s   79887 | loss  7.38 | ppl   1600.21
+| epoch   1 step      310 | batches    310 / 2101 | lr 3.100e-03 | ms/batch 616.9 | tok/s   79674 | loss  7.31 | ppl   1492.24
+| epoch   1 step      320 | batches    320 / 2101 | lr 3.200e-03 | ms/batch 617.2 | tok/s   79639 | loss  7.22 | ppl   1364.03
+| epoch   1 step      330 | batches    330 / 2101 | lr 3.300e-03 | ms/batch 616.7 | tok/s   79703 | loss  7.13 | ppl   1248.78
+| epoch   1 step      340 | batches    340 / 2101 | lr 3.400e-03 | ms/batch 615.2 | tok/s   79890 | loss  7.06 | ppl   1166.64
+| epoch   1 step      350 | batches    350 / 2101 | lr 3.500e-03 | ms/batch 614.7 | tok/s   79963 | loss  7.02 | ppl   1113.67
+| epoch   1 step      360 | batches    360 / 2101 | lr 3.600e-03 | ms/batch 616.1 | tok/s   79782 | loss  6.94 | ppl   1033.61
+| epoch   1 step      370 | batches    370 / 2101 | lr 3.700e-03 | ms/batch 615.8 | tok/s   79816 | loss  6.88 | ppl    971.68
+| epoch   1 step      380 | batches    380 / 2101 | lr 3.800e-03 | ms/batch 614.6 | tok/s   79977 | loss  6.81 | ppl    902.67
+/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py:180: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+WARNING:torch.distributed.elastic.agent.server.api:Received 2 death signal, shutting down workers
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124056 closing signal SIGINT
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124057 closing signal SIGINT
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124058 closing signal SIGINT
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124062 closing signal SIGINT
+----------------------------------------------------------------------------------------------------
+Exiting from training early
+Training time: 3.97 minutes
+Training throughput: 79781.35 tok/s
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124056 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124057 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124058 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 124062 closing signal SIGTERM
+Traceback (most recent call last):
+  File "train.py", line 1187, in <module>
+    main()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "train.py", line 1187, in <module>
+Received SIGTERM, ignoring
+Traceback (most recent call last):
+  File "train.py", line 1187, in <module>
+    main()
+KeyboardInterrupt
+    main()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "train.py", line 1187, in <module>
+    main()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/agent/server/api.py", line 709, in run
+    result = self._invoke_run(role)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/agent/server/api.py", line 850, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 62, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 124020 got signal: 2
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/agent/server/api.py", line 716, in run
+    self._shutdown(e.sigval)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/agent/server/local_elastic_agent.py", line 289, in _shutdown
+    self._pcontext.close(death_sig)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 332, in close
+    self._close(death_sig=death_sig, timeout=timeout)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 709, in _close
+    handler.proc.wait(time_to_wait)
+  File "/usr/lib/python3.8/subprocess.py", line 1083, in wait
+    return self._wait(timeout=timeout)
+  File "/usr/lib/python3.8/subprocess.py", line 1800, in _wait
+    time.sleep(delay)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 62, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 124020 got signal: 2
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py", line 195, in <module>
+    main()
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py", line 191, in main
+    launch(args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launch.py", line 176, in launch
+    run(args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/run.py", line 753, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launcher/api.py", line 132, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launcher/api.py", line 237, in launch_agent
+    result = agent.run()
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/agent/server/api.py", line 721, in run
+    self._shutdown()
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/agent/server/local_elastic_agent.py", line 289, in _shutdown
+    self._pcontext.close(death_sig)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 332, in close
+    self._close(death_sig=death_sig, timeout=timeout)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 709, in _close
+    handler.proc.wait(time_to_wait)
+  File "/usr/lib/python3.8/subprocess.py", line 1083, in wait
+    return self._wait(timeout=timeout)
+  File "/usr/lib/python3.8/subprocess.py", line 1800, in _wait
+    time.sleep(delay)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 62, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 124020 got signal: 2

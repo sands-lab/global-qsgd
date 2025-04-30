@@ -179,6 +179,9 @@ def main_worker(gpu, ngpus_per_node, args):
             elif hook =="exponential_dithering":
                 print("Exponential Dithering Hook")
                 model.register_comm_hook(None, exponential_dithering_hook)
+            elif hook =="standard_dithering_4bit":
+                print("Standard Dithering 4bit Hook")
+                model.register_comm_hook(None, standard_dithering_4bit_hook)
             elif hook =="qsgd":
                 print("QSGD Hook")
                 model.register_comm_hook(None, qsgd_hook)

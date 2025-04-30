@@ -1,0 +1,41 @@
+NCCL_P2P_DISABLE: 1
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='standard_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='standard_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='standard_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Namespace(backend='nccl', batch_size=512, c='DeepFwFM', datadir='./dataset', deep_nodes=400, emb_corr=1.0, emb_r=0.444, embedding_size=10, ensemble=0, gpu=0, h_depth=3, hook='standard_dithering', init='tcp://127.0.0.1:44444', l2=6e-07, learning_rate=0.001, momentum=0, n_epochs=10, num_deeps=1, numerical=13, prune=1, prune_deep=1, prune_fm=1, prune_r=1, random_seed=666, sparse=0.9, use_cuda=1, use_deep=1, use_ffm=0, use_fm=0, use_fwfm=1, use_fwlw=1, use_logit=0, use_lw=1, use_multi=0, warm=2.0)
+Standard Dithering Hook
+Standard Dithering Hook
+Standard Dithering Hook
+Standard Dithering Hook
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [1] loss: 0.093095 metric: 0.881459 sparse 0.00% time: 124.711189 s
+Training [1] loss: 0.093095 metric: 0.881459 sparse 0.00% time: 124.719498 s
+Training [1] loss: 0.093095 metric: 0.881459 sparse 0.00% time: 124.720596 s
+Training [1] loss: 0.093095 metric: 0.881459 sparse 0.00% time: 124.729284 s
+Validation [1] loss: 0.109726 metric: 0.737879 sparse 0.00% time: 124.726720 s
+**************************************************
+Validation [1] loss: 0.109726 metric: 0.737879 sparse 0.00% time: 124.735076 s
+**************************************************
+Validation [1] loss: 0.109726 metric: 0.737879 sparse 0.00% time: 124.735818 s
+**************************************************
+Validation [1] loss: 0.109726 metric: 0.737879 sparse 0.00% time: 124.744742 s
+**************************************************
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Model parameters 607959302, sparse rate 0.00%
+Training [2] loss: 0.038400 metric: 0.982437 sparse 0.00% time: 123.073283 s
+Training [2] loss: 0.038400 metric: 0.982437 sparse 0.00% time: 123.086095 s
+Training [2] loss: 0.038400 metric: 0.982437 sparse 0.00% time: 123.075242 s
+Training [2] loss: 0.038400 metric: 0.982437 sparse 0.00% time: 123.084607 s
+Validation [2] loss: 0.147260 metric: 0.718807 sparse 0.00% time: 123.088610 s
+**************************************************
+Validation [2] loss: 0.147260 metric: 0.718807 sparse 0.00% time: 123.101413 s
+**************************************************
+Validation [2] loss: 0.147260 metric: 0.718807 sparse 0.00% time: 123.090586 s
+**************************************************
+Validation [2] loss: 0.147260 metric: 0.718807 sparse 0.00% time: 123.099989 s
+**************************************************
