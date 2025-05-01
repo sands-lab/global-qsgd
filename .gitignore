@@ -9,3 +9,4 @@ models/Transformer-XL/pytorch/TF32/
 models/Transformer-XL/pytorch/wikitext-103/
 *.pyc
 **/*.tar
+*.so
