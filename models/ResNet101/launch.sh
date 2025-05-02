@@ -1,6 +1,6 @@
 seeds=(666)
 DATA_DIR=/root/miniimagenet
-export NCCL_P2P_DISABLE=1
+export NCCL_P2P_DISABLE=0
 echo "NCCL_P2P_DISABLE: $NCCL_P2P_DISABLE"
 for seed in ${seeds[@]}
 do

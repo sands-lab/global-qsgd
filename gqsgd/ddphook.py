@@ -157,57 +157,6 @@ def unpack_4bits_tensor(tensor):
     unpacked[1::2] = tensor & 0x0F
     return unpacked
 
-def standard_dithering_4bit_hook_old(
-    process_group: dist.ProcessGroup, bucket: dist.GradBucket
-) -> torch.futures.Future[torch.Tensor]:
-    """
-    This DDP communication hook implements 4-bit standard dithering quantization.
-    It quantizes the gradient tensor to 4-bit unsigned integer (0-7) using standard dithering.
-    The quantized tensor will be allreduced then dequantized to the original data type.
-
-    Example::
-        >>> ddp_model.register_comm_hook(process_group(None), standard_dithering_4bit_hook)
-    """
-    group_to_use = process_group if process_group is not None else dist.group.WORLD
-    world_size = group_to_use.size()
-    INTERVALS = 7  # 4bit -> 0-7, reserve 1 bit for overflow
-
-    # 1. Global Min and Max - Allgather
-    local_min = bucket.buffer().min()
-    local_max = bucket.buffer().max()
-    global_min = local_min
-    global_max = local_max
-    # 2 allreduce to get global min and max
-    dist.all_reduce(tensor = global_min, op=dist.ReduceOp.MIN, group = group_to_use, async_op=False)
-    dist.all_reduce(tensor = global_max, op=dist.ReduceOp.MAX, group = group_to_use, async_op=False)
-    
-    # 2. Normalize to [0,INTERVALS] and prepare for random rounding, all in-place on bucket.buffer
-    bucket.buffer().sub_(global_min).div_(global_max - global_min).mul_(INTERVALS)
-    # 3. Random Rounding: Add random noise in [0,1) to the values, then floor to get the effect of random rounding
-    bucket.buffer().add_(torch.rand_like(bucket.buffer())).floor_()
-    quantized = bucket.buffer().to(torch.uint8)
-    # 4. Pack
-    packed = torch.zeros((quantized.numel() + 1) // 2, dtype=torch.uint8, device=quantized.device)
-    packed[:quantized[::2].numel()] = quantized[::2] << 4  # Even indices for high 4 bits
-    if quantized.numel() > 1:
-        packed[:quantized[1::2].numel()] |= quantized[1::2]  # Odd indices for low 4 bits
-    # 5. Communication
-    allreduce.tree_allreduce_4bits(tensor=packed, exponential=False)
-    # 6. Unpack
-    unpacked = torch.zeros(quantized.numel(), dtype=torch.uint8, device=packed.device)
-    num_even = min(packed.numel(), unpacked.numel() // 2 + unpacked.numel() % 2)
-    unpacked[:2*num_even:2] = (packed[:num_even] >> 4) & 0x0F
-    num_odd = min(packed.numel(), unpacked.numel() // 2)
-    unpacked[1:2*num_odd:2] = packed[:num_odd] & 0x0F
-    # 7. Dequantize to the original data type
-    dequantized = unpacked.to(torch.float32)
-    scale = (global_max - global_min) / INTERVALS
-    dequantized.mul_(scale).add_(global_min)
-    fut = torch.futures.Future()
-    fut.set_result(dequantized)
-    return fut
-
-
 def standard_dithering_4bit_hook(
     process_group: dist.ProcessGroup, bucket: dist.GradBucket
 ) -> torch.futures.Future[torch.Tensor]:
