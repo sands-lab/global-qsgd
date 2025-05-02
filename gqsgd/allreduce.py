@@ -154,7 +154,64 @@ def tree_allgather(tensor) -> torch.Tensor:
     return Allgather_tensor
     
 
-def tree_allreduce_4bits(tensor, exponential = False):
+def add_packed_4bits(a: torch.Tensor, b: torch.Tensor, level: int = 0, total_levels: int = 1) -> torch.Tensor:
+    """
+    Add two tensors with 4-bit values packed into uint8 (two 4-bit values per byte).
+    Properly handles addition without cross-boundary carry issues.
+    
+    Args:
+        a: Tensor with packed 4-bit values (uint8)
+        b: Tensor with packed 4-bit values of the same shape as a (uint8)
+        level: Current tree level (0-based)
+        total_levels: Total number of tree levels
+        
+    Returns:
+        Tensor with the sum of the 4-bit values, properly packed (uint8)
+    """
+    # Ensure we're working with uint8
+    if a.dtype != torch.uint8:
+        a = a.to(torch.uint8)
+    if b.dtype != torch.uint8:
+        b = b.to(torch.uint8)
+        
+    # Extract high and low 4 bits from both inputs
+    a_high = (a >> 4) & 0x0F
+    a_low = a & 0x0F
+    b_high = (b >> 4) & 0x0F
+    b_low = b & 0x0F
+    
+    # Add them separately
+    high_sum = a_high + b_high
+    low_sum = a_low + b_low
+    
+    # For 4 workers (2 levels), we want to:
+    # - Level 0: No division (pairs of workers)
+    # - Level 1: Divide by 4 to get the final average across all 4 workers
+    if level == total_levels - 1 and total_levels > 1:
+        # At the final level, divide by 2^total_levels = world_size to get average
+        # For 4 workers, divide by 4
+        divisor = 2**total_levels
+        
+        # Divide high bits with random rounding
+        high_remainder = high_sum % divisor
+        high_rand = torch.rand_like(high_sum.float()) < (high_remainder.float() / divisor)
+        high_bits = high_sum // divisor + high_rand.to(high_sum.dtype)
+        
+        # Divide low bits with random rounding
+        low_remainder = low_sum % divisor
+        low_rand = torch.rand_like(low_sum.float()) < (low_remainder.float() / divisor)
+        low_bits = low_sum // divisor + low_rand.to(low_sum.dtype)
+    else:
+        # At earlier levels or single level trees, just clamp to 4 bits
+        high_bits = torch.clamp(high_sum, 0, 15)
+        low_bits = torch.clamp(low_sum, 0, 15)
+    
+    # Pack results back into bytes, ensuring we keep within 4 bits for each part
+    result = ((high_bits & 0x0F) << 4) | (low_bits & 0x0F)
+    
+    return result
+
+def tree_allreduce_4bits(tensor, exponential=False):
     rank = dist.get_rank()
     size = dist.get_world_size()
     send_buff = tensor.clone()
@@ -162,39 +219,26 @@ def tree_allreduce_4bits(tensor, exponential = False):
     layers = int(math.log2(size))
     if(layers != math.log2(size)):
         raise ValueError("The size of the world must be power of 2")
+    
     # Reduce
     for i in range(layers):
         interval = 2 ** (i)
         if isSender(rank, i, interval):
-            dist.isend(send_buff, rank + interval, tag = i)
+            dist.isend(send_buff, rank + interval, tag=i)
         elif isReceiver(rank, i, interval):
-            dist.recv(recv_buff, rank - interval, tag = i)
+            dist.recv(recv_buff, rank - interval, tag=i)
             if exponential == True:
                 gqsgd_cuda.exponential_dithering_reduce(send_buff[:], recv_buff[:])
             else:
-                # Add the packed 4-bit values
-                send_buff[:] += recv_buff[:]
-                # Divide by 2 for both the high 4 bits and low 4 bits with random rounding
-                # High 4 bits: extract, divide with random rounding
-                high_bits = (send_buff[:] >> 4)
-                high_remainder = high_bits % 2
-                high_rand = torch.rand_like(high_bits.float()) < 0.5 * high_remainder.float()
-                high_bits = high_bits // 2 + high_rand.to(high_bits.dtype)
-
-                # Low 4 bits: extract, divide with random rounding
-                low_bits = (send_buff[:] & 0x0F)
-                low_remainder = low_bits % 2
-                low_rand = torch.rand_like(low_bits.float()) < 0.5 * low_remainder.float()
-                low_bits = low_bits // 2 + low_rand.to(low_bits.dtype)
-                
-                # Combine the results
-                send_buff[:] = (high_bits << 4) | low_bits
+                # Add packed 4-bit values using the helper function
+                # Pass the current level i and total layers to handle scaling
+                send_buff[:] = add_packed_4bits(send_buff[:], recv_buff[:], level=i, total_levels=layers)
+    
     # Broadcast
-    # dist.broadcast(send_buff, size-1)
     for i in range(layers-1, -1, -1):
         interval = 2 ** (i)
         if isSender(rank, i, interval):
-            dist.recv(send_buff, rank + interval, tag = i+layers)
+            dist.recv(send_buff, rank + interval, tag=i+layers)
         elif isReceiver(rank, i, interval):
-            dist.isend(send_buff, rank - interval, tag = i+layers)
+            dist.isend(send_buff, rank - interval, tag=i+layers)
     tensor[:] = send_buff[:]

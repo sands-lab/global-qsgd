@@ -131,6 +131,13 @@ def qsgd_hook(
     fut.set_result(decompressed_tensor)
     return fut
 
+def pack_4bits_tensor(tensor):
+    packed = torch.zeros((tensor.numel() + 1) // 2, dtype=torch.uint8, device=tensor.device)
+    packed[:tensor[::2].numel()] = tensor[::2] << 4  # Even indices for high 4 bits
+    if tensor.numel() > 1:
+        packed[:tensor[1::2].numel()] |= tensor[1::2]  # Odd indices for low 4 bits
+    return packed
+
 def unpack_4bits_tensor(tensor):
     """
     Utility function to print the contents of a tensor that has 4-bit values packed into uint8.
@@ -150,7 +157,7 @@ def unpack_4bits_tensor(tensor):
     unpacked[1::2] = tensor & 0x0F
     return unpacked
 
-def standard_dithering_4bit_hook(
+def standard_dithering_4bit_hook_old(
     process_group: dist.ProcessGroup, bucket: dist.GradBucket
 ) -> torch.futures.Future[torch.Tensor]:
     """
@@ -198,4 +205,51 @@ def standard_dithering_4bit_hook(
     dequantized.mul_(scale).add_(global_min)
     fut = torch.futures.Future()
     fut.set_result(dequantized)
+    return fut
+
+
+def standard_dithering_4bit_hook(
+    process_group: dist.ProcessGroup, bucket: dist.GradBucket
+) -> torch.futures.Future[torch.Tensor]:
+    """
+    This DDP communication hook implements standard dithering quantization based on global norm.
+    It will quantize the gradient tensor to 8-bit signed integer: Normalize by global norm, multiply by 127 ->[-127,0,127], then round with probability.
+    The quantized tensor will be allreduced then dequantized to the same data type as the input gradient tensor.
+
+    Example::
+        >>> ddp_model.register_comm_hook(process_group(None), standard_dithering_hook)
+    """
+    group_to_use = process_group if process_group is not None else dist.group.WORLD
+    world_size = group_to_use.size()
+    # 1. Global Max
+    maximum = bucket.buffer().abs().max()
+    dist.all_reduce(tensor = maximum, op=dist.ReduceOp.MAX, group = group_to_use, async_op=False)  # Allreduce Max of abs
+    # 2. Normalize to [-3,3]
+    interval = 3
+    quantized = bucket.buffer().div_(maximum).mul_(interval)
+    # 3. Random Rounding to int8
+    gqsgd_cuda.standard_dithering_random_round(quantized)
+
+    ## 4bits allreduce
+    quantized = quantized.to(torch.int8).add_(interval) #Scale to 0-6
+    packed = pack_4bits_tensor(quantized)
+    allreduce.tree_allreduce_4bits(tensor=packed, exponential=False)
+    unpacked = unpack_4bits_tensor(packed)
+    dequantized = unpacked.to(torch.float32)
+    dequantized.sub_(interval) # Scale to -3,3
+    dequantized.div_(interval).mul_(maximum)
+    
+    ## 8bits allreduce ✅
+    # quantized = quantized.to(torch.int8).add_(interval) #Scale to 0-6
+    # packed = pack_4bits_tensor(quantized)
+    # unpacked = unpack_4bits_tensor(packed)
+    # assert (unpacked == quantized).all()
+    # allreduce.tree_allreduce(tensor=quantized, exponential=False)
+    # dequantized = quantized.to(torch.float32)
+    # dequantized.div_(world_size)
+    # dequantized.sub_(interval) # Scale to -3,3
+    # dequantized.div_(interval).mul_(maximum)
+
+    fut = torch.futures.Future()
+    fut.set_result(dequantized)    
     return fut
