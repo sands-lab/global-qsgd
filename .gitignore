@@ -10,3 +10,4 @@ models/Transformer-XL/pytorch/wikitext-103/
 *.pyc
 **/*.tar
 *.so
+*.json
