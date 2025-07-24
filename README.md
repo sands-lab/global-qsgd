@@ -13,15 +13,6 @@ We evaluated our approach on different models, including CNNs, Transformers, and
 - **Hardware-Optimized**: Efficient CUDA kernels for exponential encoding/decoding
 - **Easy-to-use**: Seamless PyTorch DDP integration
 
-## 🚀 Supported Quantization Methods
-
-| Method | Description | Note |
-|--------|-------------|----------|
-| **Global-QSGD Standard Dithering** | Linear quantization with global norm | Best speed-up |
-| **Global-QSGD Exponential Dithering** | Exponential quantization with global norm | Best convergence |
-| **THC** | quantization with global norm | Baseline for Allreduce compatible quantization |
-| **PowerSGD** | Low-rank matrix approximation | Baseline for Allreduce compatible decomposition |
-| **QSGD** | Quantized SGD with stochastic rounding | Baseline for Allgather based quantization |
 
 ## 📋 Requirements
 
@@ -104,6 +95,17 @@ for batch in dataloader:
     loss.backward()  # Gradients are automatically quantized
     optimizer.step()
 ```
+
+## 🚀 Supported Quantization Methods
+
+| Method | Description | Hook Name | Note |
+|--------|-------------|-----------|----------|
+| **Global-QSGD Standard Dithering** | Linear quantization with global norm | `standard_dithering_hook` | Best speed-up |
+| **Global-QSGD Exponential Dithering** | Exponential quantization with global norm | `exponential_dithering_hook` | Best convergence |
+| **THC** | quantization with global norm | `thc_hook` | Baseline for Allreduce compatible quantization |
+| **PowerSGD** | Low-rank matrix approximation | `powerSGD_hook` | Baseline for Allreduce compatible decomposition |
+| **QSGD** | Quantized SGD with stochastic rounding | `qsgd_hook` | Baseline for Allgather based quantization |
+| **Default (No Quantization)** | No quantization, standard DDP communication | `default_hook` | Baseline, no quantization |
 
 ## 🧪 Experimental Validation
 
