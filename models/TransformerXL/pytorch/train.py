@@ -126,7 +126,7 @@ def parse_args():
                                 help='Choices: powerSGD, lgreco, accordion, lgreco_accordion, default, gqsgdDefault, gqsgdStandardDithering. gqsgdExponentialDithering')
 
     dataset = parser.add_argument_group('dataset setup')
-    dataset.add_argument('--data', type=str, default='/root/wikitext-103',
+    dataset.add_argument('--data', type=str, default='../../../../wikitext-103',
                          help='Location of the data corpus')
     dataset.add_argument('--dataset', type=str, default='wt103',
                          choices=['wt103', 'lm1b', 'enwik8', 'text8'],
