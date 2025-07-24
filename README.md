@@ -114,7 +114,7 @@ Our framework has been extensively validated across three diverse domains:
 # Execute from host: Copy data inside docker
 docker cp <path to miniimagenet> GlobalQSGD:/root/miniimagenet
 # Execute inside docker
-cd models/ResNet101
+cd /root/global-qsgd/models/ResNet101
 mkdir logs
 ./launch.sh
 ```
@@ -130,22 +130,11 @@ cd /root/global-qsgd/models/TransformerXL/pytorch
 
 ### Recommendation Systems: DeepLight on Criteo
 ```bash
-cd models/DeepLight  
+cd /root/global-qsgd/models/DeepLight  
 ./launch.sh
 ```
 
 Each experiment includes comprehensive comparisons across all quantization methods with detailed performance metrics.
-
-## 📊 Performance Results
-
-Our extensive experiments demonstrate significant improvements in training efficiency:
-
-- **Communication Reduction**: Up to 8× reduction in gradient communication volume
-- **Training Speedup**: 2-4× faster convergence in distributed settings
-- **Accuracy Preservation**: <1% accuracy loss compared to full-precision training
-- **Memory Efficiency**: Reduced memory footprint for gradient storage
-
-*Detailed results and analysis are available in our ECAI 2025 paper.*
 
 ## 🏗️ Architecture Overview
 
