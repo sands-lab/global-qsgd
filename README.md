@@ -40,6 +40,7 @@ The fastest way to get started is using our pre-configured Docker environment:
 docker pull messagebuffer/global-qsgd:latest
 
 # Run with GPU support
+#
 docker run --ipc=host --net=host --gpus=all \
            --ulimit memlock=-1:-1 \
            -v $(pwd):/workspace \
@@ -51,27 +52,31 @@ docker run --ipc=host --net=host --gpus=all \
 
 ### Option 1: Quick Installation
 ```bash
-git clone https://github.com/your-repo/global-quantization.git
-cd global-quantization
-python setup.py install
+cd ~
+git clone git@github.com:sands-lab/global-qsgd.git
+cd global-qsgd
+python3 setup.py install
 ```
 
 ### Option 2: Development Installation
 ```bash
-git clone https://github.com/your-repo/global-quantization.git
-cd global-quantization
-pip install -e .
+cd ~
+git clone git@github.com:sands-lab/global-qsgd.git
+cd global-qsgd
+pip3 install -e .
 ```
 
 ### Verify Installation
 ```python
-import torch
-import gqsgd
-from gqsgd.ddphook import *
-from gqsgd import lgreco_hook, powerSGD_hook
+# Installation Check
+python3
+>>> import torch
+>>> import gqsgd
+>>> from gqsgd.ddphook import *
+>>> from gqsgd import lgreco_hook, powerSGD_hook
 
-# Run basic test
-python test/testddp.py
+# Run simple test for distributed communication
+python3 test/testddp.py
 ```
 
 ## 💡 Usage
@@ -109,6 +114,7 @@ Our framework has been extensively validated across three diverse domains:
 ### Computer Vision: ResNet101 on ImageNet
 ```bash
 cd models/ResNet101
+mkdir logs
 ./launch.sh
 ```
 
