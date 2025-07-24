@@ -121,6 +121,9 @@ mkdir logs
 
 ### Natural Language Processing: TransformerXL on WikiText-103  
 ```bash
+# Execute from host: Copy data inside docker
+docker cp <path to wikitext> GlobalQSGD:/root/miniimagenet
+# Execute inside docker
 cd /root/global-qsgd/models/TransformerXL/pytorch
 ./launch.sh
 ```
