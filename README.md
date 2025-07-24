@@ -4,12 +4,12 @@
 [![Paper 2025](https://img.shields.io/badge/Paper-ECAI'25-blue.svg)](https://ecai2025.eu/)
 [![Docker](https://img.shields.io/docker/pulls/myuser/myimage)](https://hub.docker.com/r/myuser/myimage)
 
-Global-QSGD provides an easy-to-use Python library that accelerates distributed deep learning training through gradient quantization with global information. Our approach significantly reduces communication overhead while maintaining training convergence and model accuracy, enabling efficient scaling across multiple nodes. \\
-We evaluated our approach on different models, including CNNs, Transformers, and Recommendation Models. The code is tested on ASUS ESC N4A-E11 server equipped with 4 NVIDIA A100 GPUs, which runs. Ubuntu 22.04 with CUDA 11.6, and PyTorch 1.13.0.
+Global-QSGD provides an easy-to-use Python library that accelerates distributed deep learning training through gradient quantization with global information. Our approach significantly reduces communication overhead while maintaining training convergence and model accuracy, enabling efficient scaling across multiple nodes.
+We evaluated our approach on different models, including CNNs, Transformers, and Recommendation Models. The code is tested on ASUS ESC N4A-E11 server equipped with 4 NVIDIA A100 GPUs, which runs Ubuntu 22.04 with CUDA 11.6 and PyTorch 1.13.0.
 
 ## 🎯 Key Contributions
 - **Global Normalization**: Gradient quantization with global norm 
-- **Exponential Dithering**: Ensure the convergency
+- **Exponential Dithering**: Ensures convergence
 - **Hardware-Optimized**: Efficient CUDA kernels for exponential encoding/decoding
 - **Easy-to-use**: Seamless PyTorch DDP integration
 
@@ -50,6 +50,7 @@ python3 setup.py install
 ### Option 2: Development Installation
 ```bash
 cd ~
+rm -r Global-QSGD
 git clone git@github.com:sands-lab/global-qsgd.git
 cd global-qsgd
 pip3 install -e .
@@ -102,7 +103,7 @@ for batch in dataloader:
 |--------|-------------|-----------|----------|
 | **Global-QSGD Standard Dithering** | Linear quantization with global norm | `standard_dithering_hook` | Best speed-up |
 | **Global-QSGD Exponential Dithering** | Exponential quantization with global norm | `exponential_dithering_hook` | Best convergence |
-| **THC** | quantization with global norm | `thc_hook` | Baseline for Allreduce compatible quantization |
+| **THC** | Quantization with global norm | `thc_hook` | Baseline for Allreduce compatible quantization |
 | **PowerSGD** | Low-rank matrix approximation | `powerSGD_hook` | Baseline for Allreduce compatible decomposition |
 | **QSGD** | Quantized SGD with stochastic rounding | `qsgd_hook` | Baseline for Allgather based quantization |
 | **Default (No Quantization)** | No quantization, standard DDP communication | `default_hook` | Baseline, no quantization |
@@ -111,33 +112,38 @@ for batch in dataloader:
 
 Our framework has been extensively validated across three diverse domains:
 
-### Computer Vision: ResNet101 on ImageNet
-```bash
-# Execute from host: Copy data inside docker
-# miniimagenet should be the folder contains train folder and val folder
-# Inside train&val folder, there are manu subfolders contains JPEG pictures
-docker cp <path to miniimagenet> GlobalQSGD:/root/miniimagenet
-# Execute inside docker
-cd /root/global-qsgd/models/ResNet101
-bash ./launch.sh
-```
-
-### Natural Language Processing: TransformerXL on WikiText-103  
-```bash
-# Execute from host: Copy data inside docker
-docker cp <path to wikitext> GlobalQSGD:/root/global-qsgd/models/TransformerXL/pytorch
-# Execute inside docker
-cd /root/global-qsgd/models/TransformerXL/pytorch
-bash ./launch.sh
-```
-
 ### Recommendation Systems: DeepLight on Criteo
+
 ```bash
 cd /root/global-qsgd/models/DeepLight  
 bash ./launch.sh
 ```
 
 Each experiment includes comprehensive comparisons across all quantization methods with detailed performance metrics.
+
+### Natural Language Processing: TransformerXL on WikiText-103  
+
+```bash
+# Execute from host: Copy data inside docker
+# dataset can be obtained from https://www.kaggle.com/datasets/dekomposition/wikitext103
+# Rename files under wikitext-103 to: test.txt, train.txt, valid.txt
+docker cp <path to wikitext> GlobalQSGD:/root/global-qsgd/models/TransformerXL/pytorch
+# Execute inside docker
+cd /root/global-qsgd/models/TransformerXL/pytorch
+bash ./launch.sh
+```
+
+### Computer Vision: ResNet101 on ImageNet
+```bash
+# Execute from host: Copy data inside docker
+# dataset can be obtained from https://www.kaggle.com/datasets/zcyzhchyu/mini-imagenet
+# miniimagenet should  contains the train and val folders
+# Inside the train and val folders, there are many subfolders that contain JPEG pictures
+docker cp <path to miniimagenet> GlobalQSGD:/root/miniimagenet
+# Execute inside docker
+cd /root/global-qsgd/models/ResNet101
+bash ./launch.sh
+```
 
 ## 🏗️ Architecture Overview
 
