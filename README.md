@@ -114,11 +114,12 @@ Our framework has been extensively validated across three diverse domains:
 ### Computer Vision: ResNet101 on ImageNet
 ```bash
 # Execute from host: Copy data inside docker
+# miniimagenet should be the folder contains train folder and val folder
+# Inside train&val folder, there are manu subfolders contains JPEG pictures
 docker cp <path to miniimagenet> GlobalQSGD:/root/miniimagenet
 # Execute inside docker
 cd /root/global-qsgd/models/ResNet101
-mkdir logs
-./launch.sh
+bash ./launch.sh
 ```
 
 ### Natural Language Processing: TransformerXL on WikiText-103  
@@ -127,13 +128,13 @@ mkdir logs
 docker cp <path to wikitext> GlobalQSGD:/root/global-qsgd/models/TransformerXL/pytorch
 # Execute inside docker
 cd /root/global-qsgd/models/TransformerXL/pytorch
-./launch.sh
+bash ./launch.sh
 ```
 
 ### Recommendation Systems: DeepLight on Criteo
 ```bash
 cd /root/global-qsgd/models/DeepLight  
-./launch.sh
+bash ./launch.sh
 ```
 
 Each experiment includes comprehensive comparisons across all quantization methods with detailed performance metrics.
