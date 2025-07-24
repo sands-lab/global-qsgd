@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p logs
 export NCCL_P2P_DISABLE=0
 echo "NCCL_P2P_DISABLE: $NCCL_P2P_DISABLE"
 workers=4

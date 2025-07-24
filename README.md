@@ -40,10 +40,8 @@ The fastest way to get started is using our pre-configured Docker environment:
 docker pull messagebuffer/global-qsgd:latest
 
 # Run with GPU support
-#
 docker run --ipc=host --net=host --gpus=all \
            --ulimit memlock=-1:-1 \
-           -v $(pwd):/workspace \
            --name GlobalQSGD \
            -it messagebuffer/global-qsgd:latest bash
 ```
@@ -113,6 +111,9 @@ Our framework has been extensively validated across three diverse domains:
 
 ### Computer Vision: ResNet101 on ImageNet
 ```bash
+# Execute from host: Copy data inside docker
+docker cp <path to miniimagenet> GlobalQSGD:/root/miniimagenet
+# Execute inside docker
 cd models/ResNet101
 mkdir logs
 ./launch.sh
@@ -120,7 +121,7 @@ mkdir logs
 
 ### Natural Language Processing: TransformerXL on WikiText-103  
 ```bash
-cd models/TransformerXL/pytorch
+cd /root/global-qsgd/models/TransformerXL/pytorch
 ./launch.sh
 ```
 
