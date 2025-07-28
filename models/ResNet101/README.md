@@ -1,5 +1,10 @@
 # ImageNet training in PyTorch
+
 This repo is modified from https://github.com/pytorch/examples/tree/main/imagenet
+
+
+## Quick Start
+
 To launch the code:
 ```shell
 python main.py -a wide_resnet101_2 --epochs=90 --batch-size 64 --dist-url 'tcp://127.0.0.1:12701' --dist-backend 'nccl' --multiprocessing-distributed --world-size 1 --rank 0 --seed=100 --hook default <path to imagenet>
@@ -9,7 +14,6 @@ python main.py -a wide_resnet101_2 --epochs=90 --batch-size 64 --dist-url 'tcp:/
 More details can be found below.
 
 ---
-
 
 This implements training of popular model architectures, such as ResNet, AlexNet, and VGG on the ImageNet dataset.
 
@@ -112,4 +116,19 @@ optional arguments:
                         training
   --dummy               use fake data to benchmark
 
+```
+
+## Citation
+
+```bibtex
+# ResNet Model (CVPR'16)
+@misc{zagoruyko2017wideresidualnetworks,
+      title={Wide Residual Networks}, 
+      author={Sergey Zagoruyko and Nikos Komodakis},
+      year={2017},
+      eprint={1605.07146},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/1605.07146}, 
+}
 ```
